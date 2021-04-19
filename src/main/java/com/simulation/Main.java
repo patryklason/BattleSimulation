@@ -5,9 +5,9 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        int size = 100;
+        int size = 10;
         Map map = new Map(size);
-        List<Field> mapList = map.getMapList();
+        List<List<Field>> mapList = map.getMapList();
 
 
         int numOfInfantry = 10;
@@ -28,13 +28,13 @@ public class Main {
         System.out.println(mapList);
 
 
-        int days = 1;
-        //for(int i = 0; i < days; ++i){
+        int days = 100;
+        for(int i = 0; i < days; ++i){
         for (ArmyUnit armyUnit : armyList) {
             armyUnit.move(map);
         }
 
-        //}
+        }
 
 
         System.out.println(mapList);
@@ -43,27 +43,32 @@ public class Main {
 
 class Map{
     final int size;
-    final private List<Field> mapList = new ArrayList<>();
+    final private List<List<Field>> mapList = new ArrayList<>();
 
     public Map(int size){
         this.size = size;
         for(int i = 0; i < size; ++i){
-            mapList.add(new Field(i));
+            mapList.add(new ArrayList<>());
+            for(int j = 0; j < size; ++j) {
+                mapList.get(i).add(new Field(i,j));
+            }
         }
     }
 
-    public List<Field> getMapList() {
+    public List<List<Field>> getMapList() {
         return mapList;
     }
 }
 
 class Field{
-    final int position;
+    final int pos_x;
+    final int pos_y;
     private boolean isFree;
     private String takenBy;
 
-    public Field(int position){
-        this.position = position;
+    public Field(int pos_x, int pos_y){
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
         isFree = true;
         takenBy = "none";
     }
@@ -77,7 +82,7 @@ class Field{
 
     public void setTakenBy(String obj){
         if(!(obj == null))
-            takenBy = new String(obj);
+            takenBy = obj;
     }
     public String getTakenBy() {
         return takenBy;
@@ -88,17 +93,17 @@ class Field{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Field field = (Field) o;
-        return position == field.position;
+        return pos_x == field.pos_x && pos_y == field.pos_y;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position);
+        return Objects.hash(pos_x, pos_y);
     }
 
     @Override
     public String toString() {
-        return "Field: " + position + " takenBy: " + getTakenBy() + "\n";
+        return "Field[" + pos_x + "," + pos_y + "] " + " takenBy: " + getTakenBy() + "\n";
     }
 }
 
@@ -109,12 +114,14 @@ abstract class Unit{
     public Unit(String type, Map map){
         Random random = new Random();
         int rnd;
+        int rnd1;
 
         this.type = type;
 
         do {
             rnd = random.nextInt(map.size-1);
-            Field fieldVar = map.getMapList().get(rnd);
+            rnd1 = random.nextInt(map.size-1);
+            Field fieldVar = map.getMapList().get(rnd).get(rnd1);
             if (fieldVar.getIsFree()) {
                 field = fieldVar;
                 field.setIsFree(false);
@@ -139,37 +146,68 @@ abstract class MovingUnit extends Unit{
     }
 
     void move(Map map){
-        int currPos = field.position;
+        int currPos_x = field.pos_x;
+        int currPos_y = field.pos_y;
 
 
-        if(currPos + movement < map.size && currPos + movement >= 0) {
-            if (map.getMapList().get(currPos + movement).getIsFree()) {
-                field.setIsFree(true);
-                field.setTakenBy("none");
-                field = map.getMapList().get(currPos + movement);
-                field.setIsFree(false);
-                field.setTakenBy(this.type);
+        if(currPos_y + movement >= 0 && currPos_y + movement < map.size){
+            if(map.getMapList().get(currPos_x).get(currPos_y + movement).getIsFree()){
+                freeField(field);
+                field = map.getMapList().get(currPos_x).get(currPos_y + movement);
+                takeField(field, type);
 
                 System.out.println("moved");
             }
             else
-                System.out.println("cannot move forward!");
+                System.out.println("cannot move up!");
         }
-        else if(currPos - movement < map.size && currPos - movement >=0) {
-            if (map.getMapList().get(currPos - movement).getIsFree()) {
-                field.setIsFree(true);
-                field.setTakenBy("none");
-                field = map.getMapList().get(currPos - movement);
-                field.setIsFree(false);
-                field.setTakenBy(this.type);
+        else if(currPos_y - movement >= 0 && currPos_y - movement < map.size){
+            if(map.getMapList().get(currPos_x).get(currPos_y - movement).getIsFree()){
+                freeField(field);
+                field = map.getMapList().get(currPos_x).get(currPos_y - movement);
+                takeField(field, type);
 
                 System.out.println("moved");
             }
             else
-                System.out.println("cannot move backward!");
+                System.out.println("cannot move down!");
+        }
+        else if(currPos_x + movement < map.size && currPos_x + movement >= 0) {
+            if (map.getMapList().get(currPos_x + movement).get(currPos_y).getIsFree()) {
+                freeField(field);
+                field = map.getMapList().get(currPos_x + movement).get(currPos_y);
+                takeField(field, type);
+
+                System.out.println("moved");
+            }
+            else
+                System.out.println("cannot move right!");
+        }
+        else if(currPos_x - movement < map.size && currPos_x - movement >=0) {
+            if (map.getMapList().get(currPos_x - movement).get(currPos_y).getIsFree()) {
+                freeField(field);
+                field = map.getMapList().get(currPos_x - movement).get(currPos_y);
+                takeField(field, type);
+
+                System.out.println("moved");
+            }
+            else
+                System.out.println("cannot move left!");
         }
         else
             System.out.println("Cannot move outside the map!");
+    }
+    private void freeField(Field field){
+        if(field != null) {
+            field.setIsFree(true);
+            field.setTakenBy("none");
+        }
+    }
+    private void takeField(Field field, String type){
+        if(field != null) {
+            field.setIsFree(false);
+            field.setTakenBy(type);
+        }
     }
 }
 
@@ -197,7 +235,7 @@ class ArmyUnit extends MovingUnit{
 
     @Override
     public String toString(){
-        return type + " alive: " + isAlive + " pos: " + field.position + "\n";
+        return type + " alive: " + isAlive + " pos[" + field.pos_x + "," + field.pos_y + "]" + "\n";
     }
 
 }
