@@ -2,7 +2,7 @@ package com.simulation;
 
 
 /**
- * @version 1.0.1
+ * @version 1.0.2
  * @author Patryk Lason, Hubert Belkot
  */
 class Supplies{

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 
 /**
- * @version 1.0.1
+ * @version 1.0.2
  * @author Patryk Lason, Hubert Belkot
  */
 class Field{
@@ -22,7 +22,6 @@ class Field{
 
 
     public void setTakenByArmy(int unitId){
-        if(takenByArmy == -1)
             takenByArmy = unitId;
     }
     public int getTakenByArmy() {
@@ -30,7 +29,6 @@ class Field{
     }
 
     public void setTakenByNeutral(int unitId) {
-        if(takenByNeutral == -1)
             takenByNeutral = unitId;
     }
     public int getTakenByNeutral() {

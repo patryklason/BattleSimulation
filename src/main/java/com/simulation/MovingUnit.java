@@ -4,7 +4,7 @@ import java.util.Random;
 
 
 /**
- * @version 1.0.0
+ * @version 1.0.2
  * @author Patryk Lason, Hubert Belkot
  */
 abstract class MovingUnit extends Unit{
@@ -19,14 +19,16 @@ abstract class MovingUnit extends Unit{
 
     Field findNewField(Map map){
         Field newField = null;
-
         Random rnd = new Random();
-        int moveDir = rnd.nextInt(2);
 
-        switch (moveDir) {
-            case 0 -> newField = horizontalMove(map, field.pos_x, field.pos_y);
-            case 1 -> newField = verticalMove(map, field.pos_x, field.pos_y);
-        }
+        do {
+            int moveDir = rnd.nextInt(2);
+
+            switch (moveDir) {
+                case 0 -> newField = horizontalMove(map, field.pos_x, field.pos_y);
+                case 1 -> newField = verticalMove(map, field.pos_x, field.pos_y);
+            }
+        }while(field==null);
         return newField;
     }
 

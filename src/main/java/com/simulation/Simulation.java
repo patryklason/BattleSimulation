@@ -4,11 +4,11 @@ import java.util.*;
 
 
 /**
- * @version 1.0.1
+ * @version 1.0.2
  * @author Patryk Lason, Hubert Belkot
  *
  * @implNote army units can spawn on traps!
- * @// TODO: 30.04.2021 implement neutral units movement and interaction
+ *
  */
 
 public class Simulation {
@@ -18,7 +18,26 @@ public class Simulation {
         Map map = new Map(size);
         final List<List<Field>> mapList = map.getMapList();
 
-        UnitCreator unitCreator = new UnitCreator(map, 8, 5, 3,1,2);
+        int iterations = 100;
+        int infantry = 30;   //values for each team
+        int tanks = 10;
+        int mobiles = 20;
+        int bases = 5;
+        int traps = 25;
+        int numOfWantedArmy = infantry*2 + tanks*2;
+        int numOfWantedNeutrals = mobiles + bases + traps;
+        if(numOfWantedArmy > map.size* map.size){
+            System.out.println("Cannot spawn " + numOfWantedArmy + " army units on "
+                    + map.size + "x" + map.size + " map!");
+            return;
+        }
+        else if(numOfWantedNeutrals > map.size* map.size){
+            System.out.println("Cannot spawn " + numOfWantedNeutrals + " neutral units on "
+                    + map.size + "x" + map.size + " map!");
+            return;
+        }
+
+        UnitCreator unitCreator = new UnitCreator(map, infantry, tanks, mobiles,bases,traps);
         final List<Unit> unitList = unitCreator.getUnitList();
 
         System.out.println(unitList);
@@ -28,21 +47,35 @@ public class Simulation {
         System.out.println("Created Tanks: " + ArmyUnit.getNumOfALiveTanks());
 
 
-        for(Unit unit : unitList){
-            if(unit instanceof ArmyUnit){
-                ArmyUnit armyUnit = (ArmyUnit) unit;
-                armyUnit.move(map, unitCreator);
+        for(int i = 0; i < iterations; ++i) {
+            System.out.println("==================================== ITERATION: " + (i+1) + "======================");
+            for (Unit unit : unitList) {
+                if (unit instanceof ArmyUnit) {
+                    ArmyUnit armyUnit = (ArmyUnit) unit;
+                    armyUnit.move(map, unitCreator);
+                }
+                else if(unit instanceof MovingBase){
+                MovingBase movingBase = (MovingBase) unit;
+                movingBase.move(map, unitCreator);
+                }
             }
-            //else if(unit instanceof MovingBase){
-                //MovingBase movingBase = (MovingBase) unit;
-                //movingBase.move(map, unitCreator);
-            //}
         }
+        System.out.println();
         System.out.println("Units left: " + ArmyUnit.getNumOfAliveUnits());
         System.out.println("infantry left: " + ArmyUnit.getNumOfALiveInfantry());
         System.out.println("tanks left: " + ArmyUnit.getNumOfALiveTanks());
         System.out.println("amount of battles: " + ArmyUnit.getNumOfBattles());
         System.out.println("amount of attacks: " + ArmyUnit.getNumOfAttacks());
+
+        int team1 = ArmyUnit.getNumOfAliveTeam1();
+        int team2 = ArmyUnit.getNumOfAliveTeam2();
+
+        if(team1 > team2)
+            System.out.println("Team 1 won the war (" + team1 + " to " + team2+ ")");
+        else if(team2 > team1)
+            System.out.println("Team 2 won the war (" + team2 + " to " + team1 + ")");
+        else
+            System.out.println("draw! (" + team1 + " to " + team2 + ")");
     }
 
 
