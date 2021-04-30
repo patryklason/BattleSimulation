@@ -13,9 +13,6 @@ class MovingBase extends MovingUnit{
         super(id, "movingBase", map, movement);
     }
 
-    public int getUsesLeft() {
-        return usesLeft;
-    }
     public void setUsesLeft(int amount){
         usesLeft = amount;
     }

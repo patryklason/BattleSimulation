@@ -13,9 +13,6 @@ class Trap extends Unit{
         super(id, "trap", map);
     }
 
-    public int getUsesLeft() {
-        return usesLeft;
-    }
 
     void attack(Unit unit){
         if(unit instanceof MovingBase && usesLeft > 0) {

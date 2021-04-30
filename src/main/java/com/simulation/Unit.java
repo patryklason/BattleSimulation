@@ -42,7 +42,7 @@ abstract class Unit {
                 }
             }
             else
-                System.out.println("Couldnt found suitable constructor for " + type);
+                System.out.println("Couldn't found suitable constructor for " + type);
         }while(field == null);
     }
 

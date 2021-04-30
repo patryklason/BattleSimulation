@@ -88,17 +88,10 @@ class ArmyUnit extends MovingUnit{
         return numOfAliveTeam2;
     }
 
-    public void setSupplies(Supplies supplies) {
-        this.supplies = supplies;
-    }
-
     public Supplies getSupplies() {
         return supplies;
     }
 
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
     public boolean getAlive(){
         return isAlive;
     }
