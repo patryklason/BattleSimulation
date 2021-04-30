@@ -2,8 +2,9 @@ package com.simulation;
 
 import java.util.*;
 
+
 /**
- * @version 1.0.0
+ * @version 1.0.1
  * @author Patryk Lason, Hubert Belkot
  *
  * @implNote army units can spawn on traps!

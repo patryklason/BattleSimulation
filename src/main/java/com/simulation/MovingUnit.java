@@ -2,6 +2,11 @@ package com.simulation;
 
 import java.util.Random;
 
+
+/**
+ * @version 1.0.0
+ * @author Patryk Lason, Hubert Belkot
+ */
 abstract class MovingUnit extends Unit{
 
     int movement;

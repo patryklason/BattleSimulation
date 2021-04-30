@@ -3,6 +3,11 @@ package com.simulation;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @version 1.0.1
+ * @author Patryk Lason, Hubert Belkot
+ */
 class UnitCreator{
     final private List<Unit> unitList= new ArrayList<>();
 

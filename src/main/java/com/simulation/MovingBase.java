@@ -1,5 +1,10 @@
 package com.simulation;
 
+
+/**
+ * @version 1.0.1
+ * @author Patryk Lason, Hubert Belkot
+ */
 class MovingBase extends MovingUnit{
     final int ammoToGive = 2;
     private int UsesLeft = 5;

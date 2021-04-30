@@ -2,6 +2,11 @@ package com.simulation;
 
 import java.util.Random;
 
+
+/**
+ * @version 1.0.1
+ * @author Patryk Lason, Hubert Belkot
+ */
 abstract class Unit {
     protected Field field = null;
     final int id;
