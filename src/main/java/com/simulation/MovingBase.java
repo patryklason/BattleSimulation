@@ -6,7 +6,7 @@ package com.simulation;
  * @author Patryk Lason, Hubert Belkot
  */
 class MovingBase extends MovingUnit{
-    final int ammoToGive = 2;
+    final int ammoToGive = 5;
     private int usesLeft = 5;
 
     public MovingBase(int id, Map map, int movement){
@@ -57,8 +57,8 @@ class MovingBase extends MovingUnit{
         field.setTakenByNeutral(-1);
         field = newField;
         field.setTakenByNeutral(id);
-        System.out.println("Moving base " + id + " moved from [" + oldField.pos_x + "," + oldField.pos_y + "] to ["
-                + newField.pos_x + "," + newField.pos_y +"]");
+        //System.out.println("Moving base " + id + " moved from [" + oldField.pos_x + "," + oldField.pos_y + "] to ["
+        //        + newField.pos_x + "," + newField.pos_y +"]");
     }
 
     void die(){

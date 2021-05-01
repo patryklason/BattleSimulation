@@ -35,7 +35,7 @@ class ArmyUnit extends MovingUnit{
             numOfAliveTeam2++;
 
         if(type.equals("infantry")) {
-            int hp = 10; int ammo = 20; int damage = 2;
+            int hp = 10; int ammo = 20; int damage = 5;
             supplies = new Supplies(hp, ammo);
             maxHp = hp;
             maxAmmo = ammo;
@@ -44,7 +44,7 @@ class ArmyUnit extends MovingUnit{
             numOfALiveInfantry++;
         }
         else if(type.equals("tank")) {
-            int hp = 20; int ammo = 10; int damage = 5;
+            int hp = 20; int ammo = 10; int damage = 10;
             supplies = new Supplies(hp, ammo);
             maxHp = hp;
             maxAmmo = ammo;
@@ -153,8 +153,8 @@ class ArmyUnit extends MovingUnit{
         field.setTakenByArmy(-1);
         field = newField;
         field.setTakenByArmy(id);
-        System.out.println(id + " moved from [" + oldField.pos_x + "," + oldField.pos_y + "] to ["
-                + newField.pos_x + "," + newField.pos_y +"]");
+        //System.out.println(id + " moved from [" + oldField.pos_x + "," + oldField.pos_y + "] to ["
+        //        + newField.pos_x + "," + newField.pos_y +"]");
     }
 
     private boolean attack(ArmyUnit enemy){

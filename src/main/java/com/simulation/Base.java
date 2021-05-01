@@ -6,8 +6,8 @@ package com.simulation;
  * @author Patryk Lason, Hubert Belkot
  */
 class Base extends Unit{
-    int healPoints = 10;
-    int ammoToGive = 5;
+    int healPoints = 20;
+    int ammoToGive = 10;
     public Base(int id, Map map){
         super(id, "base", map);
     }

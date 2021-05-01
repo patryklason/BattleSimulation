@@ -14,16 +14,16 @@ import java.util.*;
 public class Simulation {
 
     public static void main(String[] args) {
-        int size = 10;
+        int size = 100;
         Map map = new Map(size);
         final List<List<Field>> mapList = map.getMapList();
 
-        int iterations = 100;
-        int infantry = 30;   //values for each team
-        int tanks = 10;
-        int mobiles = 20;
-        int bases = 5;
-        int traps = 25;
+        int iterations = 1000000;
+        int infantry = 4000;   //values for each team
+        int tanks = 1000;
+        int mobiles = 1000;
+        int bases = 500;
+        int traps = 1000;
         int numOfWantedArmy = infantry*2 + tanks*2;
         int numOfWantedNeutrals = mobiles + bases + traps;
         if(numOfWantedArmy > map.size* map.size){
@@ -40,8 +40,9 @@ public class Simulation {
         UnitCreator unitCreator = new UnitCreator(map, infantry, tanks, mobiles,bases,traps);
         final List<Unit> unitList = unitCreator.getUnitList();
 
-        System.out.println(unitList);
-        System.out.println(mapList);
+        //System.out.println(unitList);
+        //System.out.println(mapList);
+
         System.out.println("Created Units: " + ArmyUnit.getNumOfAliveUnits());
         System.out.println("Created Infantry: " + ArmyUnit.getNumOfALiveInfantry());
         System.out.println("Created Tanks: " + ArmyUnit.getNumOfALiveTanks());
@@ -61,9 +62,11 @@ public class Simulation {
             }
         }
         System.out.println();
+        System.out.println();
         System.out.println("Units left: " + ArmyUnit.getNumOfAliveUnits());
         System.out.println("infantry left: " + ArmyUnit.getNumOfALiveInfantry());
         System.out.println("tanks left: " + ArmyUnit.getNumOfALiveTanks());
+        System.out.println("Army units deaths: " + ((infantry + tanks) * 2 - ArmyUnit.getNumOfAliveUnits()));
         System.out.println("amount of battles: " + ArmyUnit.getNumOfBattles());
         System.out.println("amount of attacks: " + ArmyUnit.getNumOfAttacks());
 
