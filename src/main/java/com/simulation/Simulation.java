@@ -80,6 +80,4 @@ public class Simulation {
         else
             System.out.println("draw! (" + team1 + " to " + team2 + ")");
     }
-
-
 }

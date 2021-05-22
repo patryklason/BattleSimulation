@@ -149,6 +149,7 @@ class ArmyUnit extends MovingUnit{
         }
 
     }
+
     private void takeField(Field newField){
         if (newField.getTakenByArmy() != -1)
             return;
