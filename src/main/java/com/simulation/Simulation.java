@@ -18,7 +18,7 @@ public class Simulation {
         Map map = new Map(size);
         final List<List<Field>> mapList = map.getMapList();
 
-        int iterations = 1000000;
+        int iterations = 1000;
         int infantry = 4000;   //values for each team
         int tanks = 1000;
         int mobiles = 1000;

@@ -101,6 +101,7 @@ class ArmyUnit extends MovingUnit{
             this.supplies.hp = maxHp;
         else
             this.supplies.hp += hp;
+
         if(this.supplies.ammo + ammo > maxAmmo)
             this.supplies.ammo = maxAmmo;
         else
@@ -112,8 +113,10 @@ class ArmyUnit extends MovingUnit{
             return;
 
         Field newField = super.findNewField(map);
+
         if(newField==null)
             return;
+
         if(newField.getTakenByArmy()==-1){          //first handle interaction with ArmyUnits
             takeField(newField);
         }
