@@ -7,6 +7,8 @@ import java.util.*;
  * @version 1.0.3
  * @author Patryk Lasoń, Hubert Bełkot
  *
+ * @ TODO: 24.05.2021 save some important facts to file 
+ *
  *<p>Simple war simulation. There are infantry, tank, mobile base, base and trap units which can interact with others. Each unit
  * has it's own features. The program sets the startup parameters from user input and runs simulation by initializing each unit's
  * movement. The simulation ends within set number of iterations. </p>
