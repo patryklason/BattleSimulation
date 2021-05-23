@@ -1,13 +1,12 @@
 package com.simulation;
 
 
-/**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
- */
+import static com.simulation.SimulationConstants.*;
+
+
 class Trap extends Unit{
-    final int damage = 10;
-    private int usesLeft = 1;
+    final int damage = TRAP_DMG;
+    private int usesLeft = TRAP_USES;
 
     public Trap(int id, Map map){
         super(id, "trap", map);
@@ -24,10 +23,6 @@ class Trap extends Unit{
         else if(unit instanceof ArmyUnit && usesLeft > 0){
             ArmyUnit armyUnit = (ArmyUnit) unit;
             armyUnit.takeHit(damage);
-            if(!armyUnit.getAlive())
-                System.out.println("Trap killed " + armyUnit.id);
-            else
-                System.out.println("Trap dealt " + damage + " to " + id);
             usesLeft--;
         }
         if(usesLeft <= 0)
@@ -36,6 +31,7 @@ class Trap extends Unit{
     private void die(){
         usesLeft = 0;
         field.setTakenByNeutral(-1);
+        //System.out.println(type + " died!");
         field = null;
     }
 }

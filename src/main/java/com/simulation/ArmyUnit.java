@@ -1,9 +1,10 @@
 package com.simulation;
 
 
+import static com.simulation.SimulationConstants.*;
+
 /**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
+ * ArmyUnit contains infantry and tanks, which have different parameters values
  */
 class ArmyUnit extends MovingUnit{
 
@@ -23,32 +24,32 @@ class ArmyUnit extends MovingUnit{
     private static int numOfBattles;
     private static int numOfAttacks;
 
+
     public ArmyUnit(int id, String type, Map map, int movement, int team){
         super(id, type, map, movement);
 
-        this.team = team;
         isAlive = true;
+        this.team = team;
+
         numOfAliveUnits++;
-        if(team == 1)
-            numOfAliveTeam1++;
-        else if(team == 2)
-            numOfAliveTeam2++;
+        if(team == 1) numOfAliveTeam1++;
+        else if(team == 2) numOfAliveTeam2++;
 
         if(type.equals("infantry")) {
-            int hp = 10; int ammo = 20; int damage = 5;
+            int hp = INFANTRY_HP, ammo = INFANTRY_AMMO;
             supplies = new Supplies(hp, ammo);
             maxHp = hp;
             maxAmmo = ammo;
-            this.damage = damage;
+            this.damage = INFANTRY_DMG;
 
             numOfALiveInfantry++;
         }
         else if(type.equals("tank")) {
-            int hp = 20; int ammo = 10; int damage = 10;
+            int hp = TANK_HP, ammo = TANK_AMMO;
             supplies = new Supplies(hp, ammo);
             maxHp = hp;
             maxAmmo = ammo;
-            this.damage = damage;
+            this.damage = TANK_DMG;
 
             numOfALiveTanks++;
         }
@@ -96,6 +97,15 @@ class ArmyUnit extends MovingUnit{
         return isAlive;
     }
 
+    /**
+     * take supplies from base or moving base
+     * <p>
+     *     if hp is bigger than max hp, then unit's hp will be set to max (same refers
+     *     to ammo)
+     * </p>
+     * @param hp - hp to be added
+     * @param ammo - hp to be added
+     */
     void takeSupplies(int hp, int ammo){
         if(this.supplies.hp + hp > maxHp)
             this.supplies.hp = maxHp;
@@ -107,7 +117,8 @@ class ArmyUnit extends MovingUnit{
             this.supplies.ammo += ammo;
     }
 
-    protected void move(Map map, UnitCreator uc){
+    @Override
+    void move(Map map, UnitCreator uc){
         if(!isAlive)
             return;
 
@@ -119,37 +130,34 @@ class ArmyUnit extends MovingUnit{
         }
         else if(newField.getTakenByArmy() > -1){
             ArmyUnit enemy = (ArmyUnit) uc.getUnitList().get(newField.getTakenByArmy());
-            if(enemy.isAlive) {
                 if (attack(enemy))
                     numOfBattles++;
                 enemy.attack(this);
                 if (!enemy.isAlive) {
                     takeField(newField);
-                    System.out.println(id + " killed and moved!");
+                    //System.out.println(id + " killed and moved!");
                 }
-            }
+
         }
         if(newField.getTakenByNeutral() > -1){      //then handle interaction with NeutralUnits
             Unit neutralUnit = uc.getUnitList().get(newField.getTakenByNeutral());
+
             if(neutralUnit instanceof Trap){
-                Trap trap = (Trap) neutralUnit;
-                trap.attack(this);
+                ((Trap) neutralUnit).attack(this);
             }
             else if(neutralUnit instanceof MovingBase){
-                MovingBase movingBase = (MovingBase) neutralUnit;
-                movingBase.resupply(this);
+                ((MovingBase) neutralUnit).resupply(this);
             }
             else if(neutralUnit instanceof Base){
-                Base base = (Base) neutralUnit;
-                base.resupply(this);
+                ((Base) neutralUnit).resupply(this);
             }
         }
-
     }
+
     private void takeField(Field newField){
         if (newField.getTakenByArmy() != -1)
             return;
-        Field oldField = field;
+        //Field oldField = field;
         field.setTakenByArmy(-1);
         field = newField;
         field.setTakenByArmy(id);
@@ -163,12 +171,12 @@ class ArmyUnit extends MovingUnit{
         if(enemy.team == this.team)
             return false;
         if(supplies.ammo <= 0){
-            System.out.println(id + " has no ammo to attack " + enemy.id + "!");
+            System.out.println(id + " nie ma amunicji aby zaatakować " + enemy.id + "!");
             return false;
         }
         enemy.takeHit(this.damage);
         supplies.ammo--;
-        System.out.println(id + " attacked " + enemy.id + " for " + this.damage + " to " + enemy.getSupplies().hp);
+        System.out.println(id + " zaatakował " + enemy.id + " za " + this.damage + " hp do " + enemy.getSupplies().hp);
         numOfAttacks++;
         return true;
     }
@@ -177,11 +185,9 @@ class ArmyUnit extends MovingUnit{
             return;
         if(damage >= supplies.hp) {
             die();
-            System.out.println(this.id + " was attacked and died!");
         }
         else{
             supplies.hp-=damage;
-            System.out.println(this.id + " was attacked for " + damage + ", now hp: " + supplies.hp);
         }
     }
     private void die(){
@@ -191,6 +197,7 @@ class ArmyUnit extends MovingUnit{
         supplies.ammo = 0;
         isAlive = false;
         field.setTakenByArmy(-1);
+        //System.out.println(type + " died!");
         //field = null;
         if(type.equals("infantry")) {
             numOfALiveInfantry--;

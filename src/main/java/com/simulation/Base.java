@@ -1,13 +1,12 @@
 package com.simulation;
 
 
-/**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
- */
+import static com.simulation.SimulationConstants.*;
+
+
 class Base extends Unit{
-    int healPoints = 20;
-    int ammoToGive = 10;
+    int healPoints = BASE_HEAL;
+    int ammoToGive = BASE_AMMO;
     public Base(int id, Map map){
         super(id, "base", map);
     }
@@ -16,12 +15,12 @@ class Base extends Unit{
         if(unit instanceof MovingBase){
             MovingBase movingBase = (MovingBase) unit;
             movingBase.setUsesLeft(5);
-            System.out.println("Base resupplied " + movingBase.id + " moving base");
+            //System.out.println("Base resupplied " + movingBase.id + " moving base");
         }
         else if(unit instanceof ArmyUnit){
             ArmyUnit armyUnit = (ArmyUnit) unit;
             armyUnit.takeSupplies(healPoints, ammoToGive);
-            System.out.println("Base resupplied " + armyUnit.id +" army unit");
+            //System.out.println("Base resupplied " + armyUnit.id +" army unit");
         }
     }
 }

@@ -1,13 +1,12 @@
 package com.simulation;
 
 
-/**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
- */
+import static com.simulation.SimulationConstants.*;
+
+
 class MovingBase extends MovingUnit{
-    final int ammoToGive = 5;
-    private int usesLeft = 5;
+    final int ammoToGive = MOVING_BASE_AMMO;
+    private int usesLeft = MOVING_BASE_USES;
 
     public MovingBase(int id, Map map, int movement){
         super(id, "movingBase", map, movement);
@@ -23,7 +22,7 @@ class MovingBase extends MovingUnit{
         if(usesLeft <= 0)
             return;
         armyUnit.takeSupplies(0, ammoToGive);
-        System.out.println("Moving base resupplied " + armyUnit.id + " army unit");
+        //System.out.println("Moving base resupplied " + armyUnit.id + " army unit");
         usesLeft--;
     }
 
@@ -53,7 +52,7 @@ class MovingBase extends MovingUnit{
     private void takeField(Field newField){
         if(newField.getTakenByNeutral() != -1)
             return;
-        Field oldField = field;
+        //Field oldField = field;
         field.setTakenByNeutral(-1);
         field = newField;
         field.setTakenByNeutral(id);
@@ -64,6 +63,7 @@ class MovingBase extends MovingUnit{
     void die(){
         usesLeft = 0;
         field.setTakenByNeutral(-1);
+        //System.out.println(type + " died!");
         //field = null;
     }
 }

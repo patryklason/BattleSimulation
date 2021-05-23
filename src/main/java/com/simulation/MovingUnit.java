@@ -4,8 +4,9 @@ import java.util.Random;
 
 
 /**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
+ * abstract class for ArmyUnit and MovingBase
+ * <p>stores information about movement (number of field unit will move on) and
+ * methods for initializing movement</p>
  */
 abstract class MovingUnit extends Unit{
 
@@ -16,7 +17,15 @@ abstract class MovingUnit extends Unit{
         this.movement = movement;
     }
 
+    abstract void move(Map map, UnitCreator unitCreator);
 
+    /**
+     * finds new field that unit will interact with, based on unit's movement
+     * @param map map on which the new field will be found
+     * @return returns field that unit will interact with or null if cannot find one
+     * <p>finding field is divided into two possibilities: horizontal or vertical. Each possibility is randomly
+     * selected in findNewField method so that the units can move in more various way</p>
+     */
     Field findNewField(Map map){
         Field newField = null;
         Random rnd = new Random();
@@ -39,6 +48,7 @@ abstract class MovingUnit extends Unit{
             return map.getMapList().get(curPos_x - movement).get(curPos_y);
         return null;
     }
+
     private Field verticalMove(Map map, int curPos_x, int curPos_y){
         if(curPos_y + movement >= 0 && curPos_y + movement < map.size)
             return map.getMapList().get(curPos_x).get(curPos_y + movement);
@@ -46,5 +56,4 @@ abstract class MovingUnit extends Unit{
             return map.getMapList().get(curPos_x).get(curPos_y - movement);
         return null;
     }
-
 }

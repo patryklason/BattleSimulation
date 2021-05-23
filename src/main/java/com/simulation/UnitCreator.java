@@ -3,26 +3,24 @@ package com.simulation;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.simulation.SimulationConstants.*;
 
-/**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
- */
+
 class UnitCreator{
     final private List<Unit> unitList= new ArrayList<>();
 
     public UnitCreator(Map map, int infantry, int tanks, int mobiles, int bases, int traps){
 
         for(int i = 0; i < infantry; ++i) {
-            unitList.add(new ArmyUnit(unitList.size(),"infantry", map, 2, 1));
-            unitList.add(new ArmyUnit(unitList.size(),"infantry", map, 2, 2));
+            unitList.add(new ArmyUnit(unitList.size(),"infantry", map, INFANTRY_MOVE, 1));
+            unitList.add(new ArmyUnit(unitList.size(),"infantry", map, INFANTRY_MOVE, 2));
         }
         for(int i = 0; i < tanks; ++i){
-            unitList.add(new ArmyUnit(unitList.size(),"tank", map, 5, 1));
-            unitList.add(new ArmyUnit(unitList.size(),"tank", map, 5, 2));
+            unitList.add(new ArmyUnit(unitList.size(),"tank", map, TANK_MOVE, 1));
+            unitList.add(new ArmyUnit(unitList.size(),"tank", map, TANK_MOVE, 2));
         }
         for(int i = 0; i < mobiles; ++i) {
-            unitList.add(new MovingBase(unitList.size(), map, 2));
+            unitList.add(new MovingBase(unitList.size(), map, MOVING_BASE_MOVE));
         }
         for(int i = 0; i < bases; ++i)
             unitList.add(new Base(unitList.size(), map));

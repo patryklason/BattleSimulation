@@ -3,10 +3,6 @@ package com.simulation;
 import java.util.Random;
 
 
-/**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
- */
 abstract class Unit {
     protected Field field = null;
     final int id;
@@ -28,17 +24,12 @@ abstract class Unit {
                 if (fieldVar.getTakenByArmy() == -1) {
                     field = fieldVar;
                     field.setTakenByArmy(id);
-                } else {
-                    System.out.println("Tried to spawn on taken field!");
                 }
             }
             else if(type.equals("base") || type.equals("trap") || type.equals("movingBase")){
                 if(fieldVar.getTakenByNeutral() == -1) {
                     field = fieldVar;
                     field.setTakenByNeutral(id);
-                }
-                else {
-                    System.out.println("neutral object tried to spawn on taken field");
                 }
             }
             else

@@ -3,10 +3,7 @@ package com.simulation;
 import java.util.Objects;
 
 
-/**
- * @version 1.0.2
- * @author Patryk Lason, Hubert Belkot
- */
+
 class Field{
     final int pos_x;
     final int pos_y;
