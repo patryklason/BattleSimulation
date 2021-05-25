@@ -4,7 +4,7 @@ import java.util.*;
 
 
 /**
- * @version 1.0.3
+ * @version 1.0.4
  * @author Patryk Lasoń, Hubert Bełkot
  *
  * @ TODO: 24.05.2021 save some important facts to file 
