@@ -9,10 +9,9 @@ import java.util.List;
 
 
 /**
- * @version 1.0.4
+ * @version 1.0.6
  * @author Patryk Lasoń, Hubert Bełkot
  *
- * @ TODO: 24.05.2021 save some important facts to file 
  *
  *<p>Simple war simulation. There are infantry, tank, mobile base, base and trap units which can interact with others. Each unit
  * has it's own features. The program sets the startup parameters from user input and runs simulation by initializing each unit's
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class Simulation {
     static int size = 100;
-    static int iterations = 100;
+    static int iterations = 1000;
     static int infantry = 100;   //values for each team
     static int tanks = 100;
     static int mobiles = 100;
@@ -29,11 +28,17 @@ public class Simulation {
     static int traps = 100;
 
     public static void main(String[] args) {
+        recalculateParams();
+        menu();
+    }
+
+    static void simulation(){
+
         File file = new File("Results.txt");
         if(!file.exists()){
             try{
-                file.createNewFile();
-                System.out.println("Plik został utworzony");
+                if(file.createNewFile())
+                    System.out.println("Plik został utworzony");
             }catch (Exception exception){
                 System.out.println(exception.getMessage());
             }
@@ -44,7 +49,6 @@ public class Simulation {
                 Formatter formatter = new Formatter(fileWriter);
                 formatter.format("%s \r\n", "Symulacja wykonana dla danych początkowych:");
 
-                setStartupParams();
 
                 System.out.println("Symulacja się rozpoczęła!");
 
@@ -70,15 +74,15 @@ public class Simulation {
                             ((ArmyUnit) unit).move(map, unitCreator);
                         }
                         else if(unit instanceof MovingBase){
-                        ((MovingBase) unit).move(map, unitCreator);
+                            ((MovingBase) unit).move(map, unitCreator);
                         }
 
                         if(ArmyUnit.getDeadArmy()==1) {
-                           formatter.format("%s \r\n", "Jednostka "+ unit.id+" piechoty została zabita w " + (i + 1)+" iteracji");
-                                ArmyUnit.setDeadArmy(0);}
+                            formatter.format("%s \r\n", "Jednostka "+ unit.id+" piechoty została zabita w " + (i + 1)+" iteracji");
+                            ArmyUnit.setDeadArmy(0);}
                         else if(ArmyUnit.getDeadArmy()==2){
-                                formatter.format("%s \r\n", "Czołg "+ unit.id+" został zniszczony w " + (i + 1)+" iteracji");
-                                ArmyUnit.setDeadArmy(0);}
+                            formatter.format("%s \r\n", "Czołg "+ unit.id+" został zniszczony w " + (i + 1)+" iteracji");
+                            ArmyUnit.setDeadArmy(0);}
                         else if(Trap.getDeadTrap()==3){
                             formatter.format("%s \r\n", "Pułapka "+ unit.id+" została zniszczona w " + (i + 1)+" iteracji");
                             Trap.setDeadTrap(0);
@@ -132,115 +136,227 @@ public class Simulation {
                 desktop.open(file);
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Błąd otwierania pliku wynikowego!");
+                System.out.println("Błąd automatycznego otwierania pliku wynikowego!");
             }
         }
         else
             System.out.println("Twój system nie wspiera automatycznego otwarcia pliku! Możesz go znaleźć w folderze" +
-                    "programu.");
-
+                    " programu.");
     }
 
-    static void setStartupParams(){
+    static void menu(){
+        int uChoice;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Witaj w symulacji! Wybierz działanie: ");
+        do {
+            System.out.println("=============== MENU GLÓWNE ===============");
+            System.out.println("[0] wyjście");
+            System.out.println("[1] wyświetl/edytuj parametry");
+            System.out.println("[2] rozpocznij symulację");
+            System.out.print("Twój wybór: ");
+            while(!scanner.hasNextInt()) {
+                scanner = new Scanner(System.in);
+                System.out.print("Podano nieprawidłową wartość, spróbuj ponownie: ");
+            }
+            uChoice = scanner.nextInt();
+            System.out.println();
+
+            switch(uChoice){
+                case 0 -> System.out.println("Do zobaczenia :)");
+                case 1 -> printParams();
+                case 2 -> simulation();
+                default -> System.out.println("niepoprawna wartość!");
+            }
+
+        }while(uChoice != 0 && uChoice != 2);
+
+    }
+    static void printParams(){
+        int uChoice;
+        Scanner scanner = new Scanner(System.in);
+
+        do {
+            System.out.println("=============== PARAMETRY ===============");
+            System.out.println("wybierz odpowiednią cyfrę aby edytować: ");
+            System.out.println("[0] Wróć do menu");
+            System.out.println("[1] Mapa: " + size + "x" + size + " = " + (size * size) + ". Uwaga: zmianie ulegnie ilość jednostek!");
+            System.out.println("[2] Iteracje: " + iterations);
+            System.out.println("[3] Piechota: 2*" + infantry + " = " + 2 * infantry);
+            System.out.println("[4] Czołgi: 2*" + tanks + " = " + 2 * tanks);
+            System.out.println("[5] Mobilne bazy: " + mobiles);
+            System.out.println("[6] Bazy: " + bases);
+            System.out.println("[7] Pułapki: " + traps);
+            do {
+                System.out.print("Twój wybór: ");
+                while (!scanner.hasNextInt()) {
+                    scanner = new Scanner(System.in);
+                    System.out.print("Podano niepoprawną wartość, spróbuj ponownie: ");
+                }
+                uChoice = scanner.nextInt();
+                if (uChoice < 0 || uChoice > 7)
+                    System.out.println("niepoprawny wybór ");
+            } while (uChoice < 0 || uChoice > 7);
+            
+            setStartupParams(uChoice);
+        }while(uChoice != 0);
+    }
+    static void setStartupParams(int choice) {
         Scanner scanner = new Scanner(System.in);
         boolean success = false;
 
-        do {
-            System.out.print("Proszę podać rozmiar boku mapy (np. dla wartosci 10, mapa to 10x10; max 1000): ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać rozmiar boku mapy (np. dla wartosci 10, mapa to 10x10; max 1000): ");
+        switch (choice) {
+            case 1 -> {
+                do{
+                    System.out.println("Aktualny rozmiar mapy: " + size + "x" + size + " = " + size*size);
+                    System.out.print("Proszę podać rozmiar boku mapy (zakres 10-1000): ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);    //clears scanner buffer
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać rozmiar boku mapy (zakres 10-1000): ");
+                    }
+                    int x = scanner.nextInt();
+                    if (x >= 10 && x <= 1000) {
+                        size = x;
+                        recalculateParams();
+                        success = true;
+                    } else
+                        System.out.println("Podano nieprawdiłowy rozmiar (10 - 1000)!");
+                }while(!success);
             }
-            int x = scanner.nextInt();
-            if (x > 0 && x <= 1000) {
-                size = x;
-                success = true;
+            case 2-> {
+                do {
+                    System.out.println("Aktualnie iteracji: " + iterations);
+                    System.out.print("Proszę podać ilość iteracji (max 1 000 000): ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać ilość iteracji (max 1 000 000): ");
+                    }
+                    int x = scanner.nextInt();
+                    if (x > 0 && x <= 1000000) {
+                        iterations = x;
+                        success = true;
+                    } else
+                        System.out.println("Podano nieprawidłową liczbę iteracji (1-1 000 000)!");
+                } while (!success);
             }
-            else {
-                System.out.println("Podano nieprawdiłowy rozmiar (1-1000)!");
-                scanner.nextLine();
+            case 3 -> {
+                System.out.println("Pierwotna wartość: " + infantry);
+                infantry = 0;
+                do{
+                    System.out.println("wolne miejsca w aktualnym stanie: " + freeArmyFields());
+                    System.out.println(freeArmyFields() + "/2 = " + freeArmyFields()/2);
+                    System.out.print("Proszę podać ilość jednostek piechoty (dla jednej drużyny): ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać ilość jednostek piechoty (dla jednej drużyny): ");
+                    }
+                    int x = scanner.nextInt();
+                    if(x>=0 && 2*x <= freeArmyFields()){
+                        infantry = x;
+                        success = true;
+                    }
+                    else if(2*x > freeArmyFields())
+                        System.out.println(2*x - freeArmyFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                }while(!success);
             }
-        }while(!success);
+            case 4-> {
+                System.out.println("Pierwotna wartość: " + tanks);
+                tanks = 0;
+                do{
+                    System.out.println("wolne miejsca w aktualnym stanie: " + freeArmyFields());
+                    System.out.println(freeArmyFields() + "/2 = " + freeArmyFields()/2);
+                    System.out.print("Proszę podać ilość czołgów (dla jednej drużyny): ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać ilość czołgów (dla jednej drużyny): ");
+                    }
+                    int x = scanner.nextInt();
+                    if(x>=0 && 2*x <= freeArmyFields()){
+                        tanks = x;
+                        success = true;
+                    }
+                    else if(2*x > freeArmyFields())
+                        System.out.println(2*x - freeArmyFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                }while(!success);
+            }
+            case 5 -> {
+                System.out.println("Pierwotna wartość: " + mobiles);
+                mobiles = 0;
+                do{
+                    System.out.println("wolne miejsca w aktualnym stanie: " + freeNeutralFields());
+                    System.out.print("Proszę podać ilość mobilnych baz: ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać ilość mobilnych baz: ");
+                    }
+                    int x = scanner.nextInt();
+                    if(x>=0 && x <= freeNeutralFields()){
+                        mobiles = x;
+                        success = true;
+                    }
+                    else if(x > freeNeutralFields())
+                        System.out.println(x - freeNeutralFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                }while(!success);
+            }
+            case 6 -> {
+                System.out.println("Pierwotna wartość: " + bases);
+                bases = 0;
+                do{
+                    System.out.println("wolne miejsca w aktualnym stanie: " + freeNeutralFields());
+                    System.out.print("Proszę podać ilość baz: ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać ilość baz: ");
+                    }
+                    int x = scanner.nextInt();
+                    if(x>=0 && x  <= freeNeutralFields()){
+                        bases = x;
+                        success = true;
+                    }
+                    else if(x > freeNeutralFields())
+                        System.out.println(x - freeNeutralFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                }while(!success);
+            }
+            case 7 -> {
+                System.out.println("Pierwotna wartość: " + traps);
+                traps = 0;
+                do{
+                    System.out.println("wolne miejsca w aktualnym stanie: " + freeNeutralFields());
+                    System.out.print("Proszę podać ilość pułapek: ");
+                    while (!scanner.hasNextInt()) {
+                        scanner = new Scanner(System.in);
+                        System.out.println("Wprowadzono nieprawidłową wartość!");
+                        System.out.print("Proszę podać ilość pułapek: ");
+                    }
+                    int x = scanner.nextInt();
+                    if(x>=0 && x  <= freeNeutralFields()){
+                        traps = x;
+                        success = true;
+                    }
+                    else if(x > freeNeutralFields())
+                        System.out.println(x - freeNeutralFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                }while(!success);
+            }
+        }
 
-        success = false;
-
-        do{
-            System.out.print("Proszę podać ilość iteracji (max 1 000 000): ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać ilość iteracji (max 1 000 000): ");
-            }
-            int x = scanner.nextInt();
-            if(x > 0 && x <= 1000000){
-                iterations = x;
-                success = true;
-            }
-            else
-                System.out.println("Podano nieprawidłową liczbę iteracji (1-1 000 000)!");
-        }while(!success);
-
-        success = false;
-
-        do{
-            System.out.print("Proszę podać ilość jednostek piechoty (dla jednej drużyny): ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać ilość jednostek piechoty (dla jednej drużyny): ");
-            }
-            int x = scanner.nextInt();
-            infantry = Math.max(x, 0);
-
-            System.out.print("Proszę podać ilość czołgów (dla jednej drużyny): ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać ilość czołgów (dla jednej drużyny): ");
-            }
-            x = scanner.nextInt();
-            tanks = Math.max(x, 0);
-
-            System.out.print("Proszę podać ilość mobilnych baz: ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać ilość mobilnych baz: ");
-            }
-            x = scanner.nextInt();
-            mobiles = Math.max(x, 0);
-
-            System.out.print("Proszę podać ilość głównych baz: ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać ilość głównych baz: ");
-            }
-            x = scanner.nextInt();
-            bases = Math.max(x, 0);
-
-            System.out.print("Proszę podać ilość pułapek: ");
-            while (!scanner.hasNextInt()) {
-                scanner.nextLine();
-                System.out.println("Wprowadzono nieprawidłową wartość!");
-                System.out.print("Proszę podać ilość pułapek: ");
-            }
-            x = scanner.nextInt();
-            traps = Math.max(x, 0);
-
-            int numOfWantedArmy = infantry*2 + tanks*2;
-            int numOfWantedNeutrals = mobiles + bases + traps;
-            if(numOfWantedArmy > size * size){
-                System.out.println("Nie można utworzyć " + numOfWantedArmy + " jednostek wojskowych na mapie " +
-                        "o rozmiarze " + size*size);
-            }
-            else if(numOfWantedNeutrals > size* size){
-                System.out.println("Nie można utworzyć " + numOfWantedNeutrals + " jednostek neutralnych na mapie " +
-                        "o rozmiarze " + size*size);
-            }
-            else
-                success = true;
-        }while(!success);
+    }
+    static int freeArmyFields(){
+        return size*size - 2*infantry - 2*tanks;
+    }
+    static int freeNeutralFields(){
+        return size*size - mobiles - bases - traps;
+    }
+    static void recalculateParams(){
+        infantry = (int)(size*size * 0.8 / 2);
+        tanks = (int)(size*size * 0.2 / 2);
+        mobiles = (int)(size*size * 0.3);
+        bases = (int)(size*size * 0.1);
+        traps = (int)(size*size * 0.3);
     }
 }
