@@ -16,6 +16,7 @@ class MovingBase extends MovingUnit{
         usesLeft = amount;
     }
 
+
     void resupply(ArmyUnit armyUnit){
         if (!armyUnit.getAlive())
             return;

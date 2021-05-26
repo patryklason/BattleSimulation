@@ -23,6 +23,7 @@ class ArmyUnit extends MovingUnit{
     private static int numOfAliveTeam2;
     private static int numOfBattles;
     private static int numOfAttacks;
+    private static int deadArmy;
 
 
     public ArmyUnit(int id, String type, Map map, int movement, int team){
@@ -88,6 +89,10 @@ class ArmyUnit extends MovingUnit{
     public static int getNumOfAliveTeam2() {
         return numOfAliveTeam2;
     }
+
+    public static int getDeadArmy() { return deadArmy; }
+
+    public static void setDeadArmy(int deadArmy) { ArmyUnit.deadArmy = deadArmy; }
 
     public Supplies getSupplies() {
         return supplies;
@@ -205,10 +210,14 @@ class ArmyUnit extends MovingUnit{
         if(type.equals("infantry")) {
             numOfALiveInfantry--;
             numOfAliveUnits--;
+            deadArmy=1;
+            System.out.println("Jednostka piechoty została zabita");
         }
         else if(type.equals("tank")) {
             numOfALiveTanks--;
             numOfAliveUnits--;
+            deadArmy=2;
+            System.out.println("Czołg został zniszczony");
         }
         if(team == 1)
             numOfAliveTeam1--;
