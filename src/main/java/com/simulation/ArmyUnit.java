@@ -184,7 +184,7 @@ class ArmyUnit extends MovingUnit{
         }
         enemy.takeHit(this.damage);
         supplies.ammo--;
-        System.out.println(id + " zaatakował " + enemy.id + " za " + this.damage + " hp do " + enemy.getSupplies().hp);
+        //System.out.println(id + " zaatakował " + enemy.id + " za " + this.damage + " hp do " + enemy.getSupplies().hp);
         numOfAttacks++;
         return true;
     }
@@ -211,13 +211,13 @@ class ArmyUnit extends MovingUnit{
             numOfALiveInfantry--;
             numOfAliveUnits--;
             deadArmy=1;
-            System.out.println("Jednostka piechoty została zabita");
+            //System.out.println("Jednostka piechoty została zabita");
         }
         else if(type.equals("tank")) {
             numOfALiveTanks--;
             numOfAliveUnits--;
             deadArmy=2;
-            System.out.println("Czołg został zniszczony");
+            //System.out.println("Czołg został zniszczony");
         }
         if(team == 1)
             numOfAliveTeam1--;

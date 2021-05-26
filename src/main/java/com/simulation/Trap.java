@@ -23,7 +23,7 @@ class Trap extends Unit{
             MovingBase mb = (MovingBase) unit;
             mb.die();
             usesLeft--;
-            System.out.println("Trap destroyed moving base " + mb.id);
+            //System.out.println("Trap destroyed moving base " + mb.id);
         }
         else if(unit instanceof ArmyUnit && usesLeft > 0){
             ArmyUnit armyUnit = (ArmyUnit) unit;
