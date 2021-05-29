@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- * @version 1.0.7
+ * @version 2.0.0
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -27,12 +27,13 @@ public class Simulation {
     static int bases = 100;
     static int traps = 100;
 
+
     public static void main(String[] args) {
         recalculateParams();
         menu();
     }
 
-    static void simulation(){
+    public static void simulation(){
 
         File file = new File("Results.txt");
         if(!file.exists()){
@@ -51,7 +52,7 @@ public class Simulation {
 
                 Map map = new Map(size);
 
-                UnitCreator unitCreator = new UnitCreator(map, infantry, tanks, mobiles,bases,traps);
+                UnitCreator unitCreator = new UnitCreator(map, infantry/2, tanks/2, mobiles,bases,traps);
                 final List<Unit> unitList = unitCreator.getUnitList();
 
                 formatter.format("%s \r\n", "Czas rozpoczęcia: " + LocalDateTime.now());
@@ -63,7 +64,12 @@ public class Simulation {
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
 
-                boolean[]ansFile=writingConfiguration();
+                //boolean[]ansFile=writingConfiguration();
+                boolean[]ansFile = new boolean[6];
+                for(boolean i : ansFile)
+                    i = true;
+                ansFile[1] = true;
+                ansFile[5] = true;
 
                 System.out.println("Symulacja się rozpoczęła!");
 
@@ -424,16 +430,72 @@ public class Simulation {
     }
 
     static int freeArmyFields(){
-        return size*size - 2*infantry - 2*tanks;
+        return size*size - infantry - tanks;
     }
     static int freeNeutralFields(){
         return size*size - mobiles - bases - traps;
     }
-    static void recalculateParams(){
-        infantry = (int)(size*size * 0.8 / 2);
-        tanks = (int)(size*size * 0.2 / 2);
+    public static void recalculateParams(){
+        infantry = (int)(size*size * 0.8);
+        tanks = (int)(size*size * 0.2);
         mobiles = (int)(size*size * 0.3);
         bases = (int)(size*size * 0.1);
         traps = (int)(size*size * 0.3);
+    }
+
+    public static int getSize() {
+        return size;
+    }
+
+    public static void setSize(int size) {
+        Simulation.size = size;
+    }
+
+    public static int getIterations() {
+        return iterations;
+    }
+
+    public static void setIterations(int iterations) {
+        Simulation.iterations = iterations;
+    }
+
+    public static int getInfantry() {
+        return infantry;
+    }
+
+    public static void setInfantry(int infantry) {
+        Simulation.infantry = infantry;
+    }
+
+    public static int getTanks() {
+        return tanks;
+    }
+
+    public static void setTanks(int tanks) {
+        Simulation.tanks = tanks;
+    }
+
+    public static int getMobiles() {
+        return mobiles;
+    }
+
+    public static void setMobiles(int mobiles) {
+        Simulation.mobiles = mobiles;
+    }
+
+    public static int getBases() {
+        return bases;
+    }
+
+    public static void setBases(int bases) {
+        Simulation.bases = bases;
+    }
+
+    public static int getTraps() {
+        return traps;
+    }
+
+    public static void setTraps(int traps) {
+        Simulation.traps = traps;
     }
 }

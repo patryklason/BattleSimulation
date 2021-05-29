@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.sceneMainController">
+   <children>
+      <VBox alignment="CENTER" layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Button fx:id="mainBtnStart" mnemonicParsing="false" text="Rozpocznij">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="mainBtnParams" mnemonicParsing="false" text="Parametry">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="mainBtnOptions" mnemonicParsing="false" text="Opcje">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Label layoutX="203.0" layoutY="23.0" prefHeight="56.0" prefWidth="193.0" text="Symulacja Wojska" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

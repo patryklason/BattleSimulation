@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.sceneParamsController">
+   <children>
+      <Label layoutX="256.0" layoutY="14.0" prefHeight="39.0" prefWidth="87.0" text="Parametry">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Button fx:id="paramsBtnBack" layoutX="34.0" layoutY="21.0" mnemonicParsing="false" text="Wstecz" />
+      <HBox layoutX="120.0" layoutY="135.0" prefHeight="227.0" prefWidth="360.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Mapa" />
+                  <Label text="Iteracje">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Piechota">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Czołgi">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Mobilne Bazy">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="10.0" prefWidth="25.0" text="Bazy">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="Pułapki">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="mapVal" text="rozm">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></Label>
+                  <Label fx:id="iterationsVal" text="ilosc">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="infantryVal" text="ilosc">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="tanksVal" text="ilosc">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="mobilesVal" text="ilosc">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="basesVal" text="ilosc">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="trapsVal" text="ilosc">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TextField fx:id="mapInput" />
+                  <TextField fx:id="iterationsInput">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="infantryInput">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="tanksInput">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="mobilesInput">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="basesInput">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="trapsInput">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="mapConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></Button>
+                  <Button fx:id="iterationsConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="infantryConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="tanksConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="mobilesConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="basesConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="trapsConfirm" mnemonicParsing="false" text="zmień">
+                     <VBox.margin>
+                        <Insets top="6.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label fx:id="paramsInfo" layoutX="112.0" layoutY="53.0" prefHeight="62.0" prefWidth="375.0" style="-fx-background-color: #ddd;" text="Podaj nową wartość a następnie kliknij zmień">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Label>
+   </children>
+</AnchorPane>
