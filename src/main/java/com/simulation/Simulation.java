@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- * @version 1.0.6
+ * @version 1.0.7
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -49,9 +49,6 @@ public class Simulation {
                 Formatter formatter = new Formatter(fileWriter);
                 formatter.format("%s \r\n", "Symulacja wykonana dla danych początkowych:");
 
-
-                System.out.println("Symulacja się rozpoczęła!");
-
                 Map map = new Map(size);
 
                 UnitCreator unitCreator = new UnitCreator(map, infantry, tanks, mobiles,bases,traps);
@@ -66,6 +63,9 @@ public class Simulation {
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
 
+                boolean[]ansFile=writingConfiguration();
+
+                System.out.println("Symulacja się rozpoczęła!");
 
                 for(int i = 0; i < iterations; ++i) {
                     //System.out.println("====================== ITERACJA: " + (i+1) + " ======================");
@@ -77,15 +77,19 @@ public class Simulation {
                             ((MovingBase) unit).move(map, unitCreator);
                         }
 
-                        if(ArmyUnit.getDeadArmy()==1) {
+                        if(ArmyUnit.getDeadArmy()==1 && ansFile[1]) {
                             formatter.format("%s \r\n", "Jednostka "+ unit.id+" piechoty została zabita w " + (i + 1)+" iteracji");
                             ArmyUnit.setDeadArmy(0);}
-                        else if(ArmyUnit.getDeadArmy()==2){
+                        else if(ArmyUnit.getDeadArmy()==2 && ansFile[2]){
                             formatter.format("%s \r\n", "Czołg "+ unit.id+" został zniszczony w " + (i + 1)+" iteracji");
                             ArmyUnit.setDeadArmy(0);}
-                        else if(Trap.getDeadTrap()==3){
+                        else if(Trap.getDeadTrap()==3 && ansFile[3]){
                             formatter.format("%s \r\n", "Pułapka "+ unit.id+" została zniszczona w " + (i + 1)+" iteracji");
                             Trap.setDeadTrap(0);
+                        }
+                        else if(MovingBase.getDeadMovingBase()==4 && ansFile[4]){
+                            formatter.format("%s \r\n", "Bazie poruszającej się "+ unit.id+" zakończyły się zasoby w " + (i + 1)+" iteracji");
+                            MovingBase.setDeadMovingBase(0);
                         }
                     }
                 }
@@ -114,13 +118,16 @@ public class Simulation {
                     winner="Remis";}
 
                 formatter.format("%s \r\n"," ");
-                formatter.format("%s \r\n", "Wynik symulacji dla powyższych danych:");
-                formatter.format("%s \r\n","Jednostek żywych: " + ArmyUnit.getNumOfAliveUnits());
-                formatter.format("%s \r\n", "Żywej piechoty: " + ArmyUnit.getNumOfALiveInfantry());
-                formatter.format("%s \r\n", "Działających czołgów: " + ArmyUnit.getNumOfALiveTanks());
-                formatter.format("%s \r\n", "Śmierci jednostek: " + ((infantry + tanks) * 2 - ArmyUnit.getNumOfAliveUnits()));
-                formatter.format("%s \r\n", "Stoczonych bitw: " + ArmyUnit.getNumOfBattles());
-                formatter.format("%s \r\n", "Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());
+
+                if(ansFile[5]){
+                    formatter.format("%s \r\n", "Wynik symulacji dla powyższych danych:");
+                    formatter.format("%s \r\n","Jednostek żywych: " + ArmyUnit.getNumOfAliveUnits());
+                    formatter.format("%s \r\n", "Żywej piechoty: " + ArmyUnit.getNumOfALiveInfantry());
+                    formatter.format("%s \r\n", "Działających czołgów: " + ArmyUnit.getNumOfALiveTanks());
+                    formatter.format("%s \r\n", "Śmierci jednostek: " + ((infantry + tanks) * 2 - ArmyUnit.getNumOfAliveUnits()));
+                    formatter.format("%s \r\n", "Stoczonych bitw: " + ArmyUnit.getNumOfBattles());
+                    formatter.format("%s \r\n", "Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());
+                }
                 formatter.format("%s \r\n", "Rezultat symulacji: " + winner + " (" + Math.max(team1, team2) + " do " + Math.min(team1, team2) + ")");
 
                 formatter.close();
@@ -197,7 +204,7 @@ public class Simulation {
                 if (uChoice < 0 || uChoice > 7)
                     System.out.println("niepoprawny wybór ");
             } while (uChoice < 0 || uChoice > 7);
-            
+
             setStartupParams(uChoice);
         }while(uChoice != 0);
     }
@@ -346,6 +353,76 @@ public class Simulation {
         }
 
     }
+
+    static boolean[] writingConfiguration(){
+        boolean[] ansFile = new boolean[6];
+        do {
+            int fileChoice;
+            System.out.println("Wybierz jakie dane chcesz zapisać w pliku tekstowym: ");
+            System.out.println("[0] - Przejdź do symulacji");
+            System.out.println("[1] - Śmierci piechoty w iteracji");
+            System.out.println("[2] - Zniszczenia czołgu w iteracji");
+            System.out.println("[3] - Zniszczenia pułapki w iteracji");
+            System.out.println("[4] - Wykorzystania zasobów mobilnej bazy w iteracji");
+            System.out.println("[5] - Szczegółowe dane odnośnie bitew");
+            Scanner scannerFileChoice = new Scanner(System.in);
+            while (!scannerFileChoice.hasNextInt()) {
+                scannerFileChoice = new Scanner(System.in);
+                System.out.print("Podano nieprawidłową wartość, spróbuj ponownie: ");
+            }
+            fileChoice = scannerFileChoice.nextInt();
+
+            switch (fileChoice) {
+                case 0:
+                    ansFile[fileChoice] = true;
+                    break;
+                case 1:
+                    if (ansFile[fileChoice]) {
+                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
+                    } else {
+                        ansFile[fileChoice] = true;
+                        System.out.println("W pliku zapiszesz dane odnośnie śmierci piechoty w iteracji");
+                    }
+                    break;
+                case 2:
+                    if (ansFile[fileChoice]) {
+                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
+                    } else {
+                        ansFile[fileChoice] = true;
+                        System.out.println("W pliku zapiszesz dane odnośnie zniszczenia czołgu w iteracji");
+                    }
+                    break;
+                case 3:
+                    if (ansFile[fileChoice]) {
+                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
+                    } else {
+                        ansFile[fileChoice] = true;
+                        System.out.println("W pliku zapiszesz dane odnośnie zniszczenia pułapki w iteracji");
+                    }
+                    break;
+                case 4:
+                    if (ansFile[fileChoice]) {
+                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
+                    } else {
+                        ansFile[fileChoice] = true;
+                        System.out.println("W pliku zapiszesz dane odnośnie wykorzystania zasobów mobilnej bazy w iteracji");
+                    }
+                    break;
+                case 5:
+                    if (ansFile[fileChoice]) {
+                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
+                    } else {
+                        ansFile[fileChoice] = true;
+                        System.out.println("W pliku zapiszesz Szczegółowe dane odnośnie bitew");
+                    }
+                    break;
+                default:
+                    System.out.println("Niepoprawna wartość, spróbuj jeszcze raz");
+            }
+        } while (!ansFile[0]);
+        return ansFile;
+    }
+
     static int freeArmyFields(){
         return size*size - 2*infantry - 2*tanks;
     }

@@ -7,6 +7,7 @@ import static com.simulation.SimulationConstants.*;
 class MovingBase extends MovingUnit{
     final int ammoToGive = MOVING_BASE_AMMO;
     private int usesLeft = MOVING_BASE_USES;
+    private static int deadMovingBase;
 
     public MovingBase(int id, Map map, int movement){
         super(id, "movingBase", map, movement);
@@ -16,6 +17,9 @@ class MovingBase extends MovingUnit{
         usesLeft = amount;
     }
 
+    public static int getDeadMovingBase() { return deadMovingBase; }
+
+    public static void setDeadMovingBase(int deadMovingBase) { MovingBase.deadMovingBase = deadMovingBase; }
 
     void resupply(ArmyUnit armyUnit){
         if (!armyUnit.getAlive())
@@ -64,6 +68,7 @@ class MovingBase extends MovingUnit{
     void die(){
         usesLeft = 0;
         field.setTakenByNeutral(-1);
+        deadMovingBase=4;
         //System.out.println(type + " died!");
         //field = null;
     }
