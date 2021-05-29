@@ -84,6 +84,7 @@ public class sceneParamsController implements Initializable {
         paramsInfo.setStyle("-fx-text-fill: black");
         paramsInfo.setText("Podaj nowa wartosc, a nastepnie kliknij zmien");
 
+        Simulation.recalculateParams();
         printParams();
 
         TextField [] txtFields = new TextField[7];

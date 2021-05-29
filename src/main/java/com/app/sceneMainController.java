@@ -26,7 +26,6 @@ public class sceneMainController implements Initializable {
         mainBtnOptions.setOnAction(event -> changeSceneToOptions());
         mainBtnParams.setOnAction(event -> changeSceneToParams());
 
-        Simulation.recalculateParams();
     }
 
     @FXML

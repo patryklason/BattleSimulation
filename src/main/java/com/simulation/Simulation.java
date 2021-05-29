@@ -58,8 +58,8 @@ public class Simulation {
                 formatter.format("%s \r\n", "Czas rozpoczęcia: " + LocalDateTime.now());
                 formatter.format("%s \r\n", "Rozmiar boku mapy: " + size);
                 formatter.format("%s \r\n", "Ilość iteracji: " + iterations);
-                formatter.format("%s \r\n", "Liczba jednostek piechoty(dla jednej drużyny): " + infantry);
-                formatter.format("%s \r\n", "Liczba czołgów(dla jednej drużyny): " + tanks);
+                formatter.format("%s \r\n", "Liczba jednostek piechoty: " + infantry);
+                formatter.format("%s \r\n", "Liczba czołgów: " + tanks);
                 formatter.format("%s \r\n", "Liczba mobilnych baz: " + mobiles);
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
