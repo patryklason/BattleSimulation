@@ -58,8 +58,8 @@ public class Simulation {
                 formatter.format("%s \r\n", "Czas rozpoczęcia: " + LocalDateTime.now());
                 formatter.format("%s \r\n", "Rozmiar boku mapy: " + size);
                 formatter.format("%s \r\n", "Ilość iteracji: " + iterations);
-                formatter.format("%s \r\n", "Liczba jednostek piechoty: " + infantry);
-                formatter.format("%s \r\n", "Liczba czołgów: " + tanks);
+                formatter.format("%s \r\n", "Liczba jednostek piechoty: " + ArmyUnit.getNumOfALiveInfantry());
+                formatter.format("%s \r\n", "Liczba czołgów: " + ArmyUnit.getNumOfALiveTanks());
                 formatter.format("%s \r\n", "Liczba mobilnych baz: " + mobiles);
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
@@ -74,7 +74,6 @@ public class Simulation {
                 System.out.println("Symulacja się rozpoczęła!");
 
                 for(int i = 0; i < iterations; ++i) {
-                    //System.out.println("====================== ITERACJA: " + (i+1) + " ======================");
                     for (Unit unit : unitList) {
                         if (unit instanceof ArmyUnit) {
                             ((ArmyUnit) unit).move(map, unitCreator);
