@@ -13,7 +13,9 @@ public class MainApp extends Application{
 
         Scene sceneMain = new Scene(rootMain);
 
-        primaryStage.setTitle("Symulacja Wojska");
+        sceneMain.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
+
+        primaryStage.setTitle("Symulacja Wojny");
         primaryStage.setScene(sceneMain);
         primaryStage.show();
     }

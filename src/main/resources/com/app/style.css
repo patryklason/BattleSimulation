@@ -1,0 +1,20 @@
+#mainPane{
+    -fx-background-image: url("img/bgimg.jpg");
+    -fx-background-size: 620 420;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+}
+.mainBtn{
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 60px;
+    -fx-border-color: #A8261B;
+    -fx-border-radius: 60px;
+    -fx-border-width: 2px;
+    -fx-text-fill: #A8261B;
+    -fx-background-color: white;
+}
+.mainBtn:hover{
+    -fx-background-color: #A8261B;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}

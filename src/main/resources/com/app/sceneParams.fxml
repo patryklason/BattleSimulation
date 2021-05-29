@@ -12,7 +12,7 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button fx:id="paramsBtnBack" layoutX="34.0" layoutY="21.0" mnemonicParsing="false" text="Wstecz" />
+      <Button fx:id="paramsBtnBack" layoutX="34.0" layoutY="21.0" mnemonicParsing="false" styleClass="mainBtn" stylesheets="@style.css" text="Wstecz" />
       <HBox layoutX="120.0" layoutY="135.0" prefHeight="227.0" prefWidth="360.0">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -125,7 +125,7 @@
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="mapConfirm" mnemonicParsing="false" text="zmień">
+                  <Button fx:id="mapConfirm" mnemonicParsing="false" stylesheets="@style.css" text="zmień">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>
@@ -163,9 +163,12 @@
             </VBox>
          </children>
       </HBox>
-      <Label fx:id="paramsInfo" layoutX="112.0" layoutY="53.0" prefHeight="62.0" prefWidth="375.0" style="-fx-background-color: #ddd;" text="Podaj nową wartość a następnie kliknij zmień">
+      <Label fx:id="paramsInfo" layoutX="112.0" layoutY="53.0" prefHeight="62.0" prefWidth="440.0" style="-fx-background-color: #ddd;" text="Podaj nową wartość a następnie kliknij zmień">
          <opaqueInsets>
             <Insets />
-         </opaqueInsets></Label>
+         </opaqueInsets>
+         <font>
+            <Font size="13.0" />
+         </font></Label>
    </children>
 </AnchorPane>

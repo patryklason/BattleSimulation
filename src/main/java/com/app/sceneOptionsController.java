@@ -1,10 +1,12 @@
 package com.app;
 
+import com.simulation.Simulation;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -14,10 +16,63 @@ public class sceneOptionsController implements Initializable {
 
     @FXML
     private Button optionsBtnBack;
+    @FXML
+    private CheckBox fileInfantry;
+    @FXML
+    private CheckBox fileTanks;
+    @FXML
+    private CheckBox fileTraps;
+    @FXML
+    private CheckBox fileMobiles;
+    @FXML
+    private CheckBox fileStats;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         optionsBtnBack.setOnAction(event -> changeSceneToMain());
+        fileInfantry.setOnAction(event -> setCheckBox(fileInfantry, 0));
+        fileTanks.setOnAction(event -> setCheckBox(fileTanks, 1));
+        fileTraps.setOnAction(event -> setCheckBox(fileTraps, 2));
+        fileMobiles.setOnAction(event -> setCheckBox(fileMobiles, 3));
+        fileStats.setOnAction(event -> setCheckBox(fileStats, 4));
+
+        printCheckBoxes();
+    }
+
+    private void setCheckBox(CheckBox cb, int i ){
+        if(cb.isSelected()) {
+            Simulation.setuFileChoice(true, i);
+        }
+        else if(!cb.isSelected()) {
+            Simulation.setuFileChoice(false, i);
+        }
+    }
+
+    private void printCheckBoxes(){
+        boolean [] options = new boolean[5];
+        for(int i = 0; i < 5; ++i)
+            options[i] = Simulation.getuFileChoice(i);
+
+        if(options[0])
+            fileInfantry.setSelected(true);
+        else if(!options[0])
+            fileInfantry.setSelected(false);
+        if(options[1])
+            fileTanks.setSelected(true);
+        else if(!options[1])
+            fileTanks.setSelected(false);
+        if(options[2])
+            fileTraps.setSelected(true);
+        else if(!options[2])
+            fileTraps.setSelected(false);
+        if(options[3])
+            fileMobiles.setSelected(true);
+        else if(!options[3])
+            fileMobiles.setSelected(false);
+        if(options[4])
+            fileStats.setSelected(true);
+        else if(!options[4])
+            fileStats.setSelected(false);
     }
 
     @FXML

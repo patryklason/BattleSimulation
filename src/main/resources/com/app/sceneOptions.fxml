@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -11,6 +12,52 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button fx:id="optionsBtnBack" layoutX="32.0" layoutY="15.0" mnemonicParsing="false" text="Wstecz" />
+      <Button fx:id="optionsBtnBack" layoutX="32.0" layoutY="15.0" mnemonicParsing="false" styleClass="mainBtn" stylesheets="@style.css" text="Wstecz" />
+      <VBox layoutX="137.0" layoutY="163.0" prefHeight="200.0" prefWidth="325.0">
+         <children>
+            <CheckBox fx:id="fileInfantry" mnemonicParsing="false" prefHeight="20.0" prefWidth="295.0" text="smierci piechoty w iteracji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="fileTanks" mnemonicParsing="false" text="zniszczone czolgi w iteracji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="fileTraps" mnemonicParsing="false" text="zniszczone pulapki w iteracji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="fileMobiles" mnemonicParsing="false" text="wykorzystanie zasobow mobilnej bazy w iteracji">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </CheckBox>
+            <CheckBox fx:id="fileStats" mnemonicParsing="false" text="statystyki koncowe">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </CheckBox>
+         </children>
+      </VBox>
+      <Label layoutX="108.0" layoutY="119.0" text="Wybierz parametry ktore chcesz zapisac do pliku wynikowego:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

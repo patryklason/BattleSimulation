@@ -1,5 +1,6 @@
 package com.simulation;
 
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,7 +10,7 @@ import java.util.List;
 
 
 /**
- * @version 2.0.0
+ * @version 2.0.1
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -18,7 +19,7 @@ import java.util.List;
  * movement. The simulation ends within set number of iterations. </p>
  */
 
-public class Simulation {
+public class Simulation{
     static int size = 100;
     static int iterations = 1000;
     static int infantry = 8000;
@@ -26,7 +27,25 @@ public class Simulation {
     static int mobiles = 3000;
     static int bases = 1000;
     static int traps = 3000;
+    static boolean[] uFileChoice = new boolean[5];
+    static {
+        uFileChoice[0] = true;
+        uFileChoice[4] = true;
+    }
 
+    //0 - infantry
+    //1 - tanks
+    //2 - traps
+    //3 - mobiles
+    //4 - stats
+
+
+    public static void setuFileChoice(boolean value, int i) {
+        uFileChoice[i] = value;
+    }
+    public static boolean getuFileChoice(int i){
+        return uFileChoice[i];
+    }
 
     public static void main(String[] args) {
         recalculateParams();
@@ -64,14 +83,8 @@ public class Simulation {
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
 
-                //boolean[]ansFile=writingConfiguration();
-                boolean[]ansFile = new boolean[6];
-                for(boolean i : ansFile)
-                    i = true;
-                ansFile[1] = true;
-                ansFile[5] = true;
 
-                System.out.println("Symulacja się rozpoczęła!");
+                //System.out.println("Symulacja się rozpoczęła!");
 
                 for(int i = 0; i < iterations; ++i) {
                     for (Unit unit : unitList) {
@@ -82,54 +95,54 @@ public class Simulation {
                             ((MovingBase) unit).move(map, unitCreator);
                         }
 
-                        if(ArmyUnit.getDeadArmy()==1 && ansFile[1]) {
+                        if(ArmyUnit.getDeadArmy()==1 && uFileChoice[0]) {
                             formatter.format("%s \r\n", "Jednostka "+ unit.id+" piechoty została zabita w " + (i + 1)+" iteracji");
                             ArmyUnit.setDeadArmy(0);}
-                        else if(ArmyUnit.getDeadArmy()==2 && ansFile[2]){
+                        else if(ArmyUnit.getDeadArmy()==2 && uFileChoice[1]){
                             formatter.format("%s \r\n", "Czołg "+ unit.id+" został zniszczony w " + (i + 1)+" iteracji");
                             ArmyUnit.setDeadArmy(0);}
-                        else if(Trap.getDeadTrap()==3 && ansFile[3]){
+                        else if(Trap.getDeadTrap()==3 && uFileChoice[2]){
                             formatter.format("%s \r\n", "Pułapka "+ unit.id+" została zniszczona w " + (i + 1)+" iteracji");
                             Trap.setDeadTrap(0);
                         }
-                        else if(MovingBase.getDeadMovingBase()==4 && ansFile[4]){
-                            formatter.format("%s \r\n", "Bazie poruszającej się "+ unit.id+" zakończyły się zasoby w " + (i + 1)+" iteracji");
+                        else if(MovingBase.getDeadMovingBase()==4 && uFileChoice[3]){
+                            formatter.format("%s \r\n", "Bazie poruszającej się "+ unit.id+" skończyły się zasoby w " + (i + 1)+" iteracji");
                             MovingBase.setDeadMovingBase(0);
                         }
                     }
                 }
 
-                System.out.println();
+                /*System.out.println();
                 System.out.println();
                 System.out.println("Jednostek żywych: " + ArmyUnit.getNumOfAliveUnits());
                 System.out.println("Żywej piechoty: " + ArmyUnit.getNumOfALiveInfantry());
                 System.out.println("Działających czołgów: " + ArmyUnit.getNumOfALiveTanks());
-                System.out.println("Śmierci jednostek: " + ((infantry + tanks) * 2 - ArmyUnit.getNumOfAliveUnits()));
+                System.out.println("Śmierci jednostek: " + ((infantry + tanks)  - ArmyUnit.getNumOfAliveUnits()));
                 System.out.println("Stoczonych bitw: " + ArmyUnit.getNumOfBattles());
-                System.out.println("Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());
+                System.out.println("Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());*/
 
                 int team1 = ArmyUnit.getNumOfAliveTeam1();
                 int team2 = ArmyUnit.getNumOfAliveTeam2();
                 String winner;
 
                 if(team1 > team2){
-                    System.out.println("Drużyna 1 wygrała (" + team1 + " do " + team2+ ")");
+                    //System.out.println("Drużyna 1 wygrała (" + team1 + " do " + team2+ ")");
                     winner="Wygrała drużyna 1";}
                 else if(team2 > team1){
-                    System.out.println("Drużyna 2 wygrała (" + team2 + " do " + team1 + ")");
+                    //System.out.println("Drużyna 2 wygrała (" + team2 + " do " + team1 + ")");
                     winner="Wygrała drużyna 2";}
                 else{
-                    System.out.println("Remis (" + team1 + " to " + team2 + ")");
+                    //System.out.println("Remis (" + team1 + " to " + team2 + ")");
                     winner="Remis";}
 
                 formatter.format("%s \r\n"," ");
 
-                if(ansFile[5]){
+                if(uFileChoice[4]){
                     formatter.format("%s \r\n", "Wynik symulacji dla powyższych danych:");
                     formatter.format("%s \r\n","Jednostek żywych: " + ArmyUnit.getNumOfAliveUnits());
                     formatter.format("%s \r\n", "Żywej piechoty: " + ArmyUnit.getNumOfALiveInfantry());
                     formatter.format("%s \r\n", "Działających czołgów: " + ArmyUnit.getNumOfALiveTanks());
-                    formatter.format("%s \r\n", "Śmierci jednostek: " + ((infantry + tanks) * 2 - ArmyUnit.getNumOfAliveUnits()));
+                    formatter.format("%s \r\n", "Śmierci jednostek: " + ((infantry + tanks)  - ArmyUnit.getNumOfAliveUnits()));
                     formatter.format("%s \r\n", "Stoczonych bitw: " + ArmyUnit.getNumOfBattles());
                     formatter.format("%s \r\n", "Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());
                 }
@@ -499,4 +512,5 @@ public class Simulation {
     public static void setTraps(int traps) {
         Simulation.traps = traps;
     }
+
 }

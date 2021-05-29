@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.sceneProgressController">
+    <Button fx:id="progressBtnBack" layoutX="32.0" layoutY="15.0" mnemonicParsing="false" styleClass="mainBtn" stylesheets="@style.css" text="Wstecz" />
+   <Label layoutX="207.0" layoutY="31.0" prefHeight="50.0" prefWidth="185.0" text="Symulacja zakonczona">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
+   <Label layoutX="20.0" layoutY="112.0" prefHeight="31.0" prefWidth="560.0" text="Jesli po zakonczeniu plik wynikowy nie otworzy sie automatycznie, znajdziesz go w folderze programu pod nazwa &quot;Results.txt&quot;">
+      <font>
+         <Font size="10.0" />
+      </font>
+   </Label>
+</AnchorPane>
