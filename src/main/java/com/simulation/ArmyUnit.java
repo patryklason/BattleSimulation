@@ -25,6 +25,16 @@ class ArmyUnit extends MovingUnit{
     private static int numOfAttacks;
     private static int deadArmy;
 
+    public static void resetArmyStats(){
+        numOfAliveUnits = 0;
+        numOfALiveInfantry = 0;
+        numOfALiveTanks = 0;
+        numOfAliveTeam1 = 0;
+        numOfAliveTeam2 = 0;
+        numOfBattles = 0;
+        numOfAttacks = 0;
+        deadArmy = 0;
+    }
 
     public ArmyUnit(int id, String type, Map map, int movement, int team){
         super(id, type, map, movement);

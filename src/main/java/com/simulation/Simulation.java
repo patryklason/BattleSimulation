@@ -154,6 +154,8 @@ public class Simulation {
         else
             System.out.println("Twój system nie wspiera automatycznego otwarcia pliku! Możesz go znaleźć w folderze" +
                     " programu.");
+
+        ArmyUnit.resetArmyStats();
     }
 
     static void menu(){
