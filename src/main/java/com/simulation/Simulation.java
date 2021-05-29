@@ -21,11 +21,11 @@ import java.util.List;
 public class Simulation {
     static int size = 100;
     static int iterations = 1000;
-    static int infantry = 100;   //values for each team
-    static int tanks = 100;
-    static int mobiles = 100;
-    static int bases = 100;
-    static int traps = 100;
+    static int infantry = 8000;
+    static int tanks = 2000;
+    static int mobiles = 3000;
+    static int bases = 1000;
+    static int traps = 3000;
 
 
     public static void main(String[] args) {
