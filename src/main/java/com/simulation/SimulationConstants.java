@@ -1,7 +1,7 @@
 package com.simulation;
 
 /**
- * <h1>Stores custom constants for each type of unit</h1>
+ * Stores custom constants for each type of unit
  * <p>
  *     those values are not available to be changed during simulation startup
  * </p>

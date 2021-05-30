@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * @version 2.0.3
+ * @version 2.0.4
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
