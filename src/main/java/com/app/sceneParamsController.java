@@ -19,6 +19,11 @@ public class sceneParamsController implements Initializable {
     private Button paramsBtnBack;
     @FXML
     private Label paramsInfo;
+    @FXML
+    private Label freeArmyFields;
+    @FXML
+    private Label freeNeutralFields;
+
 
     @FXML
     private Label mapVal;
@@ -123,6 +128,8 @@ public class sceneParamsController implements Initializable {
         Integer mobilesI = Simulation.getMobiles();
         Integer basesI = Simulation.getBases();
         Integer trapsI = Simulation.getTraps();
+        Integer armyFields = sizeI*sizeI - infantryI - tanksI;
+        Integer neutralFields = sizeI*sizeI - mobilesI - basesI - trapsI;
 
         mapVal.setText(sizeI.toString());
         iterationsVal.setText(iterationsI.toString());
@@ -131,6 +138,9 @@ public class sceneParamsController implements Initializable {
         mobilesVal.setText(mobilesI.toString());
         basesVal.setText(basesI.toString());
         trapsVal.setText(trapsI.toString());
+
+        freeArmyFields.setText(armyFields.toString());
+        freeNeutralFields.setText(neutralFields.toString());
     }
 
     private void changeMapSize(){
@@ -138,6 +148,7 @@ public class sceneParamsController implements Initializable {
         try {
             Integer input = Integer.parseInt(mapInput.getText());
             if(input == oldSize){
+                paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana wartosc jest aktualna");
             }
             else if(input >= 10 && input <=1000){
@@ -145,10 +156,11 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Rozmiar mapy pomyslnie zmieniono na " + input.toString());
                 mapVal.setText(input.toString());
-                if(input < oldSize) {
+                if(input < oldSize && (Simulation.getInfantry() + Simulation.getTanks() > input*input
+                        || Simulation.getMobiles() + Simulation.getBases() + Simulation.getTraps() > input*input)) {
                     Simulation.recalculateParams();
-                    printParams();
                 }
+                printParams();
             }
             else{
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -163,7 +175,12 @@ public class sceneParamsController implements Initializable {
     private void changeIterations(){
         try {
             Integer input = Integer.parseInt(iterationsInput.getText());
-            if (input >= 1 && input <= 100000) {
+
+            if(input == Simulation.getIterations()){
+                paramsInfo.setStyle("-fx-text-fill: red");
+                paramsInfo.setText("Podana wartosc jest aktualna");
+            }
+            else if (input >= 1 && input <= 100000) {
                 Simulation.setIterations(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Ilosc iteracji pomyslnie zmieniono na " + input.toString());
@@ -185,6 +202,7 @@ public class sceneParamsController implements Initializable {
             Integer input = Integer.parseInt(infantryInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getInfantry()){
+                paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");
             }
             else if(input >= 0 && input <= size*size - Simulation.getTanks()){
@@ -192,6 +210,7 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Ilosc piechoty pomyslnie zmieniono na " + input.toString());
                 infantryVal.setText(input.toString());
+                printParams();
             }else if(input > size*size - Simulation.getTanks()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba piechoty jest za duza");
@@ -211,6 +230,7 @@ public class sceneParamsController implements Initializable {
             Integer input = Integer.parseInt(tanksInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getTanks()){
+                paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");
             }
             else if(input >= 0 && input <= size*size - Simulation.getInfantry()){
@@ -218,6 +238,7 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Ilosc czolgow pomyslnie zmieniono na " + input.toString());
                 tanksVal.setText(input.toString());
+                printParams();
             }else if(input > size*size - Simulation.getInfantry()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba czolgow jest za duza");
@@ -237,6 +258,7 @@ public class sceneParamsController implements Initializable {
             Integer input = Integer.parseInt(mobilesInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getMobiles()){
+                paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");
             }
             else if(input >= 0 && input <= size*size - Simulation.getBases() - Simulation.getTraps()){
@@ -244,6 +266,7 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Ilosc mobilnych baz pomyslnie zmieniono na " + input.toString());
                 mobilesVal.setText(input.toString());
+                printParams();
             }else if(input > size*size - Simulation.getBases() - Simulation.getTraps()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba mobilnych baz jest za duza");
@@ -263,6 +286,7 @@ public class sceneParamsController implements Initializable {
             Integer input = Integer.parseInt(basesInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getBases()){
+                paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");
             }
             else if(input >= 0 && input <= size*size - Simulation.getMobiles() - Simulation.getTraps()){
@@ -270,6 +294,7 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Ilosc baz pomyslnie zmieniono na " + input.toString());
                 basesVal.setText(input.toString());
+                printParams();
             }else if(input > size*size - Simulation.getMobiles() - Simulation.getTraps()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba baz jest za duza");
@@ -289,6 +314,7 @@ public class sceneParamsController implements Initializable {
             Integer input = Integer.parseInt(trapsInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getTraps()){
+                paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");
             }
             else if(input >= 0 && input <= size*size - Simulation.getMobiles() - Simulation.getBases()){
@@ -296,6 +322,7 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Ilosc pulapek pomyslnie zmieniono na " + input.toString());
                 trapsVal.setText(input.toString());
+                printParams();
             }else if(input > size*size - Simulation.getMobiles() - Simulation.getBases()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba pulapek jest za duza");
