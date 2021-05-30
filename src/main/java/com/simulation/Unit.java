@@ -2,7 +2,9 @@ package com.simulation;
 
 import java.util.Random;
 
-
+/**
+ * Base class for all the Units. It stores data such as field, id and type.
+ */
 abstract class Unit {
     protected Field field = null;
     final int id;

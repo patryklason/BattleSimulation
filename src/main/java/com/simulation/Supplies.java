@@ -1,6 +1,8 @@
 package com.simulation;
 
-
+/**
+ * Stores data about hp and ammo of each ArmyUnit.
+ */
 class Supplies{
     int hp;
     int ammo;

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * @version 2.0.1
+ * @version 2.0.2
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -32,7 +32,6 @@ public class Simulation{
         uFileChoice[0] = true;
         uFileChoice[4] = true;
     }
-
     //0 - infantry
     //1 - tanks
     //2 - traps
@@ -40,16 +39,10 @@ public class Simulation{
     //4 - stats
 
 
-    public static void setuFileChoice(boolean value, int i) {
-        uFileChoice[i] = value;
-    }
-    public static boolean getuFileChoice(int i){
-        return uFileChoice[i];
-    }
 
     public static void main(String[] args) {
         recalculateParams();
-        menu();
+        ConsoleApp.menu();
     }
 
     public static void simulation(){
@@ -84,14 +77,12 @@ public class Simulation{
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
 
 
-                //System.out.println("Symulacja się rozpoczęła!");
-
                 for(int i = 0; i < iterations; ++i) {
                     for (Unit unit : unitList) {
                         if (unit instanceof ArmyUnit) {
                             ((ArmyUnit) unit).move(map, unitCreator);
                         }
-                        else if(unit instanceof MovingBase){
+                        else if (unit instanceof MovingBase) {
                             ((MovingBase) unit).move(map, unitCreator);
                         }
 
@@ -112,27 +103,15 @@ public class Simulation{
                     }
                 }
 
-                /*System.out.println();
-                System.out.println();
-                System.out.println("Jednostek żywych: " + ArmyUnit.getNumOfAliveUnits());
-                System.out.println("Żywej piechoty: " + ArmyUnit.getNumOfALiveInfantry());
-                System.out.println("Działających czołgów: " + ArmyUnit.getNumOfALiveTanks());
-                System.out.println("Śmierci jednostek: " + ((infantry + tanks)  - ArmyUnit.getNumOfAliveUnits()));
-                System.out.println("Stoczonych bitw: " + ArmyUnit.getNumOfBattles());
-                System.out.println("Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());*/
-
                 int team1 = ArmyUnit.getNumOfAliveTeam1();
                 int team2 = ArmyUnit.getNumOfAliveTeam2();
                 String winner;
 
                 if(team1 > team2){
-                    //System.out.println("Drużyna 1 wygrała (" + team1 + " do " + team2+ ")");
                     winner="Wygrała drużyna 1";}
                 else if(team2 > team1){
-                    //System.out.println("Drużyna 2 wygrała (" + team2 + " do " + team1 + ")");
                     winner="Wygrała drużyna 2";}
                 else{
-                    //System.out.println("Remis (" + team1 + " to " + team2 + ")");
                     winner="Remis";}
 
                 formatter.format("%s \r\n"," ");
@@ -171,34 +150,6 @@ public class Simulation{
         ArmyUnit.resetArmyStats();
     }
 
-    static void menu(){
-        int uChoice;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Witaj w symulacji! Wybierz działanie: ");
-        do {
-            System.out.println("=============== MENU GLÓWNE ===============");
-            System.out.println("[0] wyjście");
-            System.out.println("[1] wyświetl/edytuj parametry");
-            System.out.println("[2] rozpocznij symulację");
-            System.out.print("Twój wybór: ");
-            while(!scanner.hasNextInt()) {
-                scanner = new Scanner(System.in);
-                System.out.print("Podano nieprawidłową wartość, spróbuj ponownie: ");
-            }
-            uChoice = scanner.nextInt();
-            System.out.println();
-
-            switch(uChoice){
-                case 0 -> System.out.println("Do zobaczenia :)");
-                case 1 -> printParams();
-                case 2 -> simulation();
-                default -> System.out.println("niepoprawna wartość!");
-            }
-
-        }while(uChoice != 0 && uChoice != 2);
-
-    }
     static void printParams(){
         int uChoice;
         Scanner scanner = new Scanner(System.in);
@@ -228,6 +179,7 @@ public class Simulation{
             setStartupParams(uChoice);
         }while(uChoice != 0);
     }
+
     static void setStartupParams(int choice) {
         Scanner scanner = new Scanner(System.in);
         boolean success = false;
@@ -374,81 +326,14 @@ public class Simulation{
 
     }
 
-    static boolean[] writingConfiguration(){
-        boolean[] ansFile = new boolean[6];
-        do {
-            int fileChoice;
-            System.out.println("Wybierz jakie dane chcesz zapisać w pliku tekstowym: ");
-            System.out.println("[0] - Przejdź do symulacji");
-            System.out.println("[1] - Śmierci piechoty w iteracji");
-            System.out.println("[2] - Zniszczenia czołgu w iteracji");
-            System.out.println("[3] - Zniszczenia pułapki w iteracji");
-            System.out.println("[4] - Wykorzystania zasobów mobilnej bazy w iteracji");
-            System.out.println("[5] - Szczegółowe dane odnośnie bitew");
-            Scanner scannerFileChoice = new Scanner(System.in);
-            while (!scannerFileChoice.hasNextInt()) {
-                scannerFileChoice = new Scanner(System.in);
-                System.out.print("Podano nieprawidłową wartość, spróbuj ponownie: ");
-            }
-            fileChoice = scannerFileChoice.nextInt();
-
-            switch (fileChoice) {
-                case 0:
-                    ansFile[fileChoice] = true;
-                    break;
-                case 1:
-                    if (ansFile[fileChoice]) {
-                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
-                    } else {
-                        ansFile[fileChoice] = true;
-                        System.out.println("W pliku zapiszesz dane odnośnie śmierci piechoty w iteracji");
-                    }
-                    break;
-                case 2:
-                    if (ansFile[fileChoice]) {
-                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
-                    } else {
-                        ansFile[fileChoice] = true;
-                        System.out.println("W pliku zapiszesz dane odnośnie zniszczenia czołgu w iteracji");
-                    }
-                    break;
-                case 3:
-                    if (ansFile[fileChoice]) {
-                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
-                    } else {
-                        ansFile[fileChoice] = true;
-                        System.out.println("W pliku zapiszesz dane odnośnie zniszczenia pułapki w iteracji");
-                    }
-                    break;
-                case 4:
-                    if (ansFile[fileChoice]) {
-                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
-                    } else {
-                        ansFile[fileChoice] = true;
-                        System.out.println("W pliku zapiszesz dane odnośnie wykorzystania zasobów mobilnej bazy w iteracji");
-                    }
-                    break;
-                case 5:
-                    if (ansFile[fileChoice]) {
-                        System.out.println("Już wybrałeś tą pozycje. Wybierz inną lub rozpocznij symulację");
-                    } else {
-                        ansFile[fileChoice] = true;
-                        System.out.println("W pliku zapiszesz Szczegółowe dane odnośnie bitew");
-                    }
-                    break;
-                default:
-                    System.out.println("Niepoprawna wartość, spróbuj jeszcze raz");
-            }
-        } while (!ansFile[0]);
-        return ansFile;
-    }
-
     static int freeArmyFields(){
         return size*size - infantry - tanks;
     }
+
     static int freeNeutralFields(){
         return size*size - mobiles - bases - traps;
     }
+
     public static void recalculateParams(){
         infantry = (int)(size*size * 0.8);
         tanks = (int)(size*size * 0.2);
@@ -511,6 +396,14 @@ public class Simulation{
 
     public static void setTraps(int traps) {
         Simulation.traps = traps;
+    }
+
+    public static void setuFileChoice(boolean value, int i) {
+        uFileChoice[i] = value;
+    }
+
+    public static boolean getuFileChoice(int i){
+        return uFileChoice[i];
     }
 
 }

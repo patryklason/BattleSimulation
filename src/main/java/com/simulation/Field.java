@@ -3,7 +3,10 @@ package com.simulation;
 import java.util.Objects;
 
 
-
+/**
+ * Field is a object that can store 1 armyUnit and 1 neutralUnit. (ex. Field can be occupied by Infantry and Base, but
+ * cannot be occupied by infantry and tank at the same time).
+ */
 class Field{
     final int pos_x;
     final int pos_y;

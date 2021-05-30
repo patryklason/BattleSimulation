@@ -3,7 +3,9 @@ package com.simulation;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Creates 2D array of fields
+ */
 class Map{
     final int size;
     final private List<List<Field>> mapList = new ArrayList<>();
