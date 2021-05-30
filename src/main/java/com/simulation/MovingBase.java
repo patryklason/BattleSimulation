@@ -31,8 +31,10 @@ class MovingBase extends MovingUnit{
     void resupply(ArmyUnit armyUnit){
         if (!armyUnit.getAlive())
             return;
-        if(usesLeft <= 0)
+        if(usesLeft <= 0) {
+            deadMovingBase = 4;
             return;
+        }
         armyUnit.takeSupplies(0, ammoToGive);
         usesLeft--;
     }
@@ -78,6 +80,6 @@ class MovingBase extends MovingUnit{
     void die(){
         usesLeft = 0;
         field.setTakenByNeutral(-1);
-        deadMovingBase=4;
+        //deadMovingBase=4;
     }
 }
