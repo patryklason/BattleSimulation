@@ -5,7 +5,9 @@ import java.util.List;
 
 import static com.simulation.SimulationConstants.*;
 
-
+/**
+ * Creates list of Units to manage them better
+ */
 class UnitCreator{
     final private List<Unit> unitList= new ArrayList<>();
 

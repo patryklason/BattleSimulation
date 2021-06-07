@@ -4,7 +4,7 @@ package com.simulation;
 import static com.simulation.SimulationConstants.*;
 
 /**
- * ArmyUnit contains infantry and tanks, which have different parameters values
+ * ArmyUnit contains infantry and tanks, which have different parameters values such as maxHp, hp, maxAmmo, ammo, team.
  */
 class ArmyUnit extends MovingUnit{
 
@@ -25,6 +25,9 @@ class ArmyUnit extends MovingUnit{
     private static int numOfAttacks;
     private static int deadArmy;
 
+    /**
+     * resets the stats to start new simulation
+     */
     public static void resetArmyStats(){
         numOfAliveUnits = 0;
         numOfALiveInfantry = 0;
@@ -133,6 +136,12 @@ class ArmyUnit extends MovingUnit{
             this.supplies.ammo += ammo;
     }
 
+    /**
+     * Allows ArmyUnit to move and interact with other Units. If the new searched field is free, the unit will take it.
+     * If it is not free, it will trigger different interactions based on type of unit that occupies the field.
+     * @param map map on which ArmyUnit will move
+     * @param uc list of units
+     */
     @Override
     void move(Map map, UnitCreator uc){
         if(!isAlive)
@@ -153,7 +162,6 @@ class ArmyUnit extends MovingUnit{
                 enemy.attack(this);
                 if (!enemy.isAlive) {
                     takeField(newField);
-                    //System.out.println(id + " killed and moved!");
                 }
 
         }
@@ -175,29 +183,35 @@ class ArmyUnit extends MovingUnit{
     private void takeField(Field newField){
         if (newField.getTakenByArmy() != -1)
             return;
-        //Field oldField = field;
         field.setTakenByArmy(-1);
         field = newField;
         field.setTakenByArmy(id);
-        //System.out.println(id + " moved from [" + oldField.pos_x + "," + oldField.pos_y + "] to ["
-        //        + newField.pos_x + "," + newField.pos_y +"]");
     }
 
+    /**
+     * Allows ArmyUnit to attack other ArmyUnit. The attack will fail if any of units is already dead, the units are in the
+     * same team or unit has not enough ammo to attack.
+     * @param enemy ArmyUnit that will be attacked.
+     * @return if the attack was successful
+     */
     private boolean attack(ArmyUnit enemy){
         if(!(isAlive && enemy.isAlive))        //czemu enemy.isAlive dziala? XDD
             return false;
         if(enemy.team == this.team)
             return false;
         if(supplies.ammo <= 0){
-            System.out.println(id + " nie ma amunicji aby zaatakować " + enemy.id + "!");
             return false;
         }
         enemy.takeHit(this.damage);
         supplies.ammo--;
-        //System.out.println(id + " zaatakował " + enemy.id + " za " + this.damage + " hp do " + enemy.getSupplies().hp);
         numOfAttacks++;
         return true;
     }
+
+    /**
+     * Lowers unit hp based on damage value or makes unit die if damage is sufficient.
+     * @param damage value subtracted from unit hp.
+     */
     void takeHit(int damage){
         if(!isAlive)
             return;
@@ -208,27 +222,30 @@ class ArmyUnit extends MovingUnit{
             supplies.hp-=damage;
         }
     }
+
+    /**
+     * sets the unit dead and sets the field free. Changes death stats.
+     */
     private void die(){
         if(!isAlive)
             return;
+
         supplies.hp = 0;
         supplies.ammo = 0;
         isAlive = false;
         field.setTakenByArmy(-1);
-        //System.out.println(type + " died!");
-        //field = null;
+
         if(type.equals("infantry")) {
             numOfALiveInfantry--;
             numOfAliveUnits--;
             deadArmy=1;
-            //System.out.println("Jednostka piechoty została zabita");
         }
         else if(type.equals("tank")) {
             numOfALiveTanks--;
             numOfAliveUnits--;
             deadArmy=2;
-            //System.out.println("Czołg został zniszczony");
         }
+
         if(team == 1)
             numOfAliveTeam1--;
         else if(team == 2)

@@ -3,7 +3,10 @@ package com.simulation;
 
 import static com.simulation.SimulationConstants.*;
 
-
+/**
+ * Moving base moves on the map and delivers supplies to ArmyUnits (if has any usesLeft).
+ * It can be destroyed by trap or resupplied by main base.
+ */
 class MovingBase extends MovingUnit{
     final int ammoToGive = MOVING_BASE_AMMO;
     private int usesLeft = MOVING_BASE_USES;
@@ -21,16 +24,25 @@ class MovingBase extends MovingUnit{
 
     public static void setDeadMovingBase(int deadMovingBase) { MovingBase.deadMovingBase = deadMovingBase; }
 
+    /**
+     * Gives specific amount of ammo to alive ArmyUnit (if ArmyUnit has not full ammo). Each gift lowers the usesLeft by 1.
+     * @param armyUnit armyUnit that will be resupplied
+     */
     void resupply(ArmyUnit armyUnit){
         if (!armyUnit.getAlive())
             return;
-        if(usesLeft <= 0)
+        if(usesLeft <= 0) {
             return;
+        }
         armyUnit.takeSupplies(0, ammoToGive);
-        //System.out.println("Moving base resupplied " + armyUnit.id + " army unit");
         usesLeft--;
     }
 
+    /**
+     * makes movingBase move on the map and interact with other units. If the field is free, it takes the field.
+     * @param map map on which the moving base will move
+     * @param uc list of Units
+     */
     void move(Map map, UnitCreator uc){
         Field newField = super.findNewField(map);
         if (newField == null)
@@ -42,7 +54,6 @@ class MovingBase extends MovingUnit{
             if(unit instanceof Trap){
                 Trap trap = (Trap) unit;
                 trap.attack(this);
-                //field.setTakenByNeutral(-1);
             }
             if(unit instanceof Base){
                 Base base = (Base) unit;
@@ -57,19 +68,17 @@ class MovingBase extends MovingUnit{
     private void takeField(Field newField){
         if(newField.getTakenByNeutral() != -1)
             return;
-        //Field oldField = field;
         field.setTakenByNeutral(-1);
         field = newField;
         field.setTakenByNeutral(id);
-        //System.out.println("Moving base " + id + " moved from [" + oldField.pos_x + "," + oldField.pos_y + "] to ["
-        //        + newField.pos_x + "," + newField.pos_y +"]");
     }
 
+    /**
+     * sets usesLeft to 0 and sets the field free
+     */
     void die(){
         usesLeft = 0;
         field.setTakenByNeutral(-1);
         deadMovingBase=4;
-        //System.out.println(type + " died!");
-        //field = null;
     }
 }

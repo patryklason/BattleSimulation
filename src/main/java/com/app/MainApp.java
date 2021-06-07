@@ -1,5 +1,6 @@
 package com.app;
 
+import com.simulation.Simulation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,8 @@ public class MainApp extends Application{
         primaryStage.setTitle("Symulacja Wojny");
         primaryStage.setScene(sceneMain);
         primaryStage.show();
+
+        Simulation.recalculateParams();
     }
 
     public static void main(String[] args) {
