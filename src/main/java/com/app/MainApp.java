@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainApp extends Application{
@@ -17,6 +18,7 @@ public class MainApp extends Application{
         sceneMain.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
 
         primaryStage.setTitle("Symulacja Wojny");
+        primaryStage.getIcons().add(new Image("https://www.forbot.pl/forum/upload_img/obrazki/IMG_4e1f007b384ab9814.jpg")); // XD
         primaryStage.setScene(sceneMain);
         primaryStage.show();
         primaryStage.setResizable(false);
