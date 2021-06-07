@@ -146,6 +146,11 @@ public class sceneParamsController implements Initializable {
         int oldSize = Simulation.getSize();
         try {
             Integer input = Integer.parseInt(mapInput.getText());
+            if(input % 2 == 1){
+                paramsInfo.setStyle("-fx-text-fill: red");
+                paramsInfo.setText("Wartosc musi byc parzysta!");
+                return;
+            }
             if(input == oldSize){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana wartosc jest aktualna");
@@ -168,7 +173,7 @@ public class sceneParamsController implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
             paramsInfo.setStyle("-fx-text-fill: red");
-            paramsInfo.setText("Podano niepoprawna wielkosc boku mapy (10 - 1000)");
+            paramsInfo.setText("Podano niepoprawna wartosc boku mapy (10 - 1000, l. parzysta)");
         }
     }
 
@@ -200,6 +205,12 @@ public class sceneParamsController implements Initializable {
         try{
             Integer input = Integer.parseInt(infantryInput.getText());
             int size = Simulation.getSize();
+
+            if(input % 2 == 1){
+                paramsInfo.setStyle("-fx-text-fill: red");
+                paramsInfo.setText("Wartosc musi byc parzysta!");
+                return;
+            }
             if(input == Simulation.getInfantry()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");
@@ -228,6 +239,12 @@ public class sceneParamsController implements Initializable {
         try{
             Integer input = Integer.parseInt(tanksInput.getText());
             int size = Simulation.getSize();
+
+            if(input % 2 == 1){
+                paramsInfo.setStyle("-fx-text-fill: red");
+                paramsInfo.setText("Wartosc musi byc parzysta!");
+                return;
+            }
             if(input == Simulation.getTanks()){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podana liczba jest aktualna");

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * @version 2.0.5
+ * @version 2.0.6
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -67,11 +67,14 @@ public class Simulation{
                 UnitCreator unitCreator = new UnitCreator(map, infantry/2, tanks/2, mobiles,bases,traps);
                 List<Unit> unitList = unitCreator.getUnitList();
 
+                int createdInfantry = ArmyUnit.getNumOfALiveInfantry();
+                int createdTanks = ArmyUnit.getNumOfALiveTanks();
+
                 formatter.format("%s \r\n", "Czas rozpoczęcia: " + LocalDateTime.now());
                 formatter.format("%s \r\n", "Rozmiar boku mapy: " + size);
                 formatter.format("%s \r\n", "Ilość iteracji: " + iterations);
-                formatter.format("%s \r\n", "Liczba jednostek piechoty: " + ArmyUnit.getNumOfALiveInfantry());
-                formatter.format("%s \r\n", "Liczba czołgów: " + ArmyUnit.getNumOfALiveTanks());
+                formatter.format("%s \r\n", "Liczba jednostek piechoty: " + createdInfantry);
+                formatter.format("%s \r\n", "Liczba czołgów: " + createdTanks);
                 formatter.format("%s \r\n", "Liczba mobilnych baz: " + mobiles);
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
@@ -124,7 +127,7 @@ public class Simulation{
                     formatter.format("%s \r\n","Jednostek żywych: " + ArmyUnit.getNumOfAliveUnits());
                     formatter.format("%s \r\n", "Żywej piechoty: " + ArmyUnit.getNumOfALiveInfantry());
                     formatter.format("%s \r\n", "Działających czołgów: " + ArmyUnit.getNumOfALiveTanks());
-                    formatter.format("%s \r\n", "Śmierci jednostek: " + ((infantry + tanks)  - ArmyUnit.getNumOfAliveUnits()));
+                    formatter.format("%s \r\n", "Śmierci jednostek: " + (createdInfantry + createdTanks  - ArmyUnit.getNumOfAliveUnits()));
                     formatter.format("%s \r\n", "Stoczonych bitw: " + ArmyUnit.getNumOfBattles());
                     formatter.format("%s \r\n", "Wykonanych ataków: " + ArmyUnit.getNumOfAttacks());
                 }

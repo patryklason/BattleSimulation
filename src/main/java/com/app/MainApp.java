@@ -19,6 +19,7 @@ public class MainApp extends Application{
         primaryStage.setTitle("Symulacja Wojny");
         primaryStage.setScene(sceneMain);
         primaryStage.show();
+        primaryStage.setResizable(false);
 
         Simulation.recalculateParams();
     }
