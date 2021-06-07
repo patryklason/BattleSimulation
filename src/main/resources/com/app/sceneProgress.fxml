@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.sceneProgressController">
     <Button fx:id="progressBtnBack" layoutX="32.0" layoutY="15.0" mnemonicParsing="false" styleClass="mainBtn" stylesheets="@style.css" text="Wstecz" />
-   <Label layoutX="207.0" layoutY="31.0" prefHeight="50.0" prefWidth="185.0" text="Symulacja zakonczona">
+   <Label layoutX="207.0" layoutY="31.0" prefHeight="50.0" prefWidth="185.0" text="Symulacja zakończona">
       <font>
          <Font size="18.0" />
       </font>

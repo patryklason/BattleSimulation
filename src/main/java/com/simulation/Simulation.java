@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * @version 2.0.4
+ * @version 2.0.5
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -65,7 +65,7 @@ public class Simulation{
                 Map map = new Map(size);
 
                 UnitCreator unitCreator = new UnitCreator(map, infantry/2, tanks/2, mobiles,bases,traps);
-                final List<Unit> unitList = unitCreator.getUnitList();
+                List<Unit> unitList = unitCreator.getUnitList();
 
                 formatter.format("%s \r\n", "Czas rozpoczęcia: " + LocalDateTime.now());
                 formatter.format("%s \r\n", "Rozmiar boku mapy: " + size);
@@ -76,6 +76,9 @@ public class Simulation{
                 formatter.format("%s \r\n", "Liczba głównych baz: " + bases);
                 formatter.format("%s \r\n\r\n", "Ilość pułapek: " + traps);
 
+                ArmyUnit.setDeadArmy(0);
+                Trap.setDeadTrap(0);
+                MovingBase.setDeadMovingBase(0);
 
                 for(int i = 0; i < iterations; ++i) {
                     for (Unit unit : unitList) {
@@ -97,7 +100,7 @@ public class Simulation{
                             Trap.setDeadTrap(0);
                         }
                         else if(MovingBase.getDeadMovingBase()==4 && uFileChoice[3]){
-                            formatter.format("%s \r\n", "Bazie poruszającej się "+ unit.id+" skończyły się zasoby w " + (i + 1)+" iteracji");
+                            formatter.format("%s \r\n", "Baza poruszająca się "+ unit.id+" została zniszczona w " + (i + 1) + " iteracji");
                             MovingBase.setDeadMovingBase(0);
                         }
                     }

@@ -171,6 +171,7 @@ public class sceneParamsController implements Initializable {
             paramsInfo.setText("Podano niepoprawna wielkosc boku mapy (10 - 1000)");
         }
     }
+
     private void changeIterations(){
         try {
             Integer input = Integer.parseInt(iterationsInput.getText());
@@ -194,7 +195,6 @@ public class sceneParamsController implements Initializable {
             paramsInfo.setText("Podano niepoprawna liczbe iteracji (1 - 100 000)");
         }
     }
-
 
     private void changeInfantry(){
         try{
