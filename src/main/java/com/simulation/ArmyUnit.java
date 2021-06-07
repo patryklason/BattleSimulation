@@ -25,19 +25,6 @@ class ArmyUnit extends MovingUnit{
     private static int numOfAttacks;
     private static int deadArmy;
 
-    /**
-     * resets the stats to start new simulation
-     */
-    public static void resetArmyStats(){
-        numOfAliveUnits = 0;
-        numOfALiveInfantry = 0;
-        numOfALiveTanks = 0;
-        numOfAliveTeam1 = 0;
-        numOfAliveTeam2 = 0;
-        numOfBattles = 0;
-        numOfAttacks = 0;
-        deadArmy = 0;
-    }
 
     public ArmyUnit(int id, String type, Map map, int movement, int team){
         super(id, type, map, movement);
@@ -109,6 +96,10 @@ class ArmyUnit extends MovingUnit{
 
     public Supplies getSupplies() {
         return supplies;
+    }
+
+    public void setSupplies(Supplies supplies) {
+        this.supplies = supplies;
     }
 
     public boolean getAlive(){
@@ -250,6 +241,20 @@ class ArmyUnit extends MovingUnit{
             numOfAliveTeam1--;
         else if(team == 2)
             numOfAliveTeam2--;
+    }
+
+    /**
+     * resets the stats to start new simulation
+     */
+    public static void resetArmyStats(){
+        numOfAliveUnits = 0;
+        numOfALiveInfantry = 0;
+        numOfALiveTanks = 0;
+        numOfAliveTeam1 = 0;
+        numOfAliveTeam2 = 0;
+        numOfBattles = 0;
+        numOfAttacks = 0;
+        deadArmy = 0;
     }
 
     @Override
