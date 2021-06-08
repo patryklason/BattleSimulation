@@ -146,6 +146,7 @@ public class sceneParamsController implements Initializable {
         int oldSize = Simulation.getSize();
         try {
             Integer input = Integer.parseInt(mapInput.getText());
+
             if(input % 2 == 1){
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Wartosc musi byc parzysta!");
@@ -160,10 +161,12 @@ public class sceneParamsController implements Initializable {
                 paramsInfo.setStyle("-fx-text-fill: green");
                 paramsInfo.setText("Rozmiar mapy pomyslnie zmieniono na " + input.toString());
                 mapVal.setText(input.toString());
-                if(input < oldSize && (Simulation.getInfantry() + Simulation.getTanks() > input*input
-                        || Simulation.getMobiles() + Simulation.getBases() + Simulation.getTraps() > input*input)) {
-                    Simulation.recalculateParams();
-                }
+                if(input < oldSize && (Simulation.getInfantry()+Simulation.getTanks() > input*input))
+                    Simulation.recalculateArmyParams();
+                if(input < oldSize && (Simulation.getMobiles() + Simulation.getBases()
+                        + Simulation.getTraps() > input*input))
+                    Simulation.recalculateNeutralParams();
+
                 printParams();
             }
             else{

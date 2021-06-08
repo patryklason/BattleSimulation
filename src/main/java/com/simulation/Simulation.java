@@ -341,8 +341,37 @@ public class Simulation{
     }
 
     public static void recalculateParams(){
-        infantry = (int)(size*size * 0.8);
-        tanks = (int)(size*size * 0.2);
+        infantry = (int)(size*size * 0.75);
+        tanks = (int)(size*size * 0.25);
+        mobiles = (int)(size*size * 0.3);
+        bases = (int)(size*size * 0.1);
+        traps = (int)(size*size * 0.3);
+    }
+
+    public static void recalculateArmyParams() {
+        int fields = size * size;
+        if((0.75 * fields) % 2 == 0 && (0.25 * fields) % 2 == 0) {
+            infantry = (int) (fields * 0.75);
+            tanks = (int) (fields * 0.25);
+        }
+        else if((0.75 * fields) % 2 == 1 && (0.25 * fields) % 2 == 0){
+            infantry = (int) ((fields - 1) * 0.75);
+            tanks = (int) (fields * 0.25);
+        }
+        else if((0.75 * fields) % 2 == 0 && (0.25 * fields) % 2 == 1){
+            infantry = (int) (fields * 0.75);
+            tanks = (int) ((fields - 1) * 0.25);
+        }
+        else if((0.75 * fields) % 2 == 1 && (0.25 * fields) % 2 == 1){
+            infantry = (int) ((fields - 1) * 0.75);
+            tanks = (int) ((fields - 1) * 0.25);
+        }
+
+        if(fields - infantry - tanks == 2)
+            infantry+=2;
+    }
+
+    public static void recalculateNeutralParams(){
         mobiles = (int)(size*size * 0.3);
         bases = (int)(size*size * 0.1);
         traps = (int)(size*size * 0.3);
