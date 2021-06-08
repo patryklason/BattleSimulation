@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * processes user options choices. User can decide what will be saved to result file
+ */
 public class sceneOptionsController implements Initializable {
 
     @FXML
@@ -39,6 +42,11 @@ public class sceneOptionsController implements Initializable {
         printCheckBoxes();
     }
 
+    /**
+     * sets the opposite value of specific file saving option. (True -> False, False -> True)
+     * @param cb specific checkBox
+     * @param i index of option that will be changed
+     */
     private void setCheckBox(CheckBox cb, int i ){
         if(cb.isSelected()) {
             Simulation.setuFileChoice(true, i);
@@ -48,6 +56,10 @@ public class sceneOptionsController implements Initializable {
         }
     }
 
+    /**
+     * prints current values of parameters and checkboxes for that parameters
+     * Used to refresh the visible values
+     */
     private void printCheckBoxes(){
         boolean [] options = new boolean[5];
         for(int i = 0; i < 5; ++i)

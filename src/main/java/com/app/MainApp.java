@@ -8,7 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * main class for application
+ */
 public class MainApp extends Application{
+
+    /**
+     * loads visible frame and stages
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent rootMain = FXMLLoader.load(getClass().getResource("sceneMain.fxml"));

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 /**
- * @version 2.0.6
+ * @version 2.0.7
  * @author Patryk Lasoń, Hubert Bełkot
  *
  *
@@ -94,10 +94,12 @@ public class Simulation{
 
                         if(ArmyUnit.getDeadArmy()==1 && uFileChoice[0]) {
                             formatter.format("%s \r\n", "Jednostka "+ unit.id+" piechoty została zabita w " + (i + 1)+" iteracji");
-                            ArmyUnit.setDeadArmy(0);}
+                            ArmyUnit.setDeadArmy(0);
+                        }
                         else if(ArmyUnit.getDeadArmy()==2 && uFileChoice[1]){
                             formatter.format("%s \r\n", "Czołg "+ unit.id+" został zniszczony w " + (i + 1)+" iteracji");
-                            ArmyUnit.setDeadArmy(0);}
+                            ArmyUnit.setDeadArmy(0);
+                        }
                         else if(Trap.getDeadTrap()==3 && uFileChoice[2]){
                             formatter.format("%s \r\n", "Pułapka "+ unit.id+" została zniszczona w " + (i + 1)+" iteracji");
                             Trap.setDeadTrap(0);
@@ -166,8 +168,8 @@ public class Simulation{
             System.out.println("[0] Wróć do menu");
             System.out.println("[1] Mapa: " + size + "x" + size + " = " + (size * size) + ". Uwaga: zmianie ulegnie ilość jednostek!");
             System.out.println("[2] Iteracje: " + iterations);
-            System.out.println("[3] Piechota: 2*" + infantry + " = " + 2 * infantry);
-            System.out.println("[4] Czołgi: 2*" + tanks + " = " + 2 * tanks);
+            System.out.println("[3] Piechota: " + infantry);
+            System.out.println("[4] Czołgi: " + tanks);
             System.out.println("[5] Mobilne bazy: " + mobiles);
             System.out.println("[6] Bazy: " + bases);
             System.out.println("[7] Pułapki: " + traps);
@@ -212,18 +214,18 @@ public class Simulation{
             case 2-> {
                 do {
                     System.out.println("Aktualnie iteracji: " + iterations);
-                    System.out.print("Proszę podać ilość iteracji (max 1 000 000): ");
+                    System.out.print("Proszę podać ilość iteracji (max 100 000): ");
                     while (!scanner.hasNextInt()) {
                         scanner = new Scanner(System.in);
                         System.out.println("Wprowadzono nieprawidłową wartość!");
-                        System.out.print("Proszę podać ilość iteracji (max 1 000 000): ");
+                        System.out.print("Proszę podać ilość iteracji (max 100 000): ");
                     }
                     int x = scanner.nextInt();
-                    if (x > 0 && x <= 1000000) {
+                    if (x > 0 && x <= 100000) {
                         iterations = x;
                         success = true;
                     } else
-                        System.out.println("Podano nieprawidłową liczbę iteracji (1-1 000 000)!");
+                        System.out.println("Podano nieprawidłową liczbę iteracji (1-100 000)!");
                 } while (!success);
             }
             case 3 -> {
@@ -231,20 +233,19 @@ public class Simulation{
                 infantry = 0;
                 do{
                     System.out.println("wolne miejsca w aktualnym stanie: " + freeArmyFields());
-                    System.out.println(freeArmyFields() + "/2 = " + freeArmyFields()/2);
-                    System.out.print("Proszę podać ilość jednostek piechoty (dla jednej drużyny): ");
+                    System.out.print("Proszę podać ilość jednostek piechoty: ");
                     while (!scanner.hasNextInt()) {
                         scanner = new Scanner(System.in);
                         System.out.println("Wprowadzono nieprawidłową wartość!");
-                        System.out.print("Proszę podać ilość jednostek piechoty (dla jednej drużyny): ");
+                        System.out.print("Proszę podać ilość jednostek piechoty: ");
                     }
                     int x = scanner.nextInt();
-                    if(x>=0 && 2*x <= freeArmyFields()){
+                    if(x>=0 && x <= freeArmyFields()){
                         infantry = x;
                         success = true;
                     }
-                    else if(2*x > freeArmyFields())
-                        System.out.println(2*x - freeArmyFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                    else if(x > freeArmyFields())
+                        System.out.println(x - freeArmyFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
                 }while(!success);
             }
             case 4-> {
@@ -252,20 +253,19 @@ public class Simulation{
                 tanks = 0;
                 do{
                     System.out.println("wolne miejsca w aktualnym stanie: " + freeArmyFields());
-                    System.out.println(freeArmyFields() + "/2 = " + freeArmyFields()/2);
-                    System.out.print("Proszę podać ilość czołgów (dla jednej drużyny): ");
+                    System.out.print("Proszę podać ilość czołgów: ");
                     while (!scanner.hasNextInt()) {
                         scanner = new Scanner(System.in);
                         System.out.println("Wprowadzono nieprawidłową wartość!");
-                        System.out.print("Proszę podać ilość czołgów (dla jednej drużyny): ");
+                        System.out.print("Proszę podać ilość czołgów: ");
                     }
                     int x = scanner.nextInt();
-                    if(x>=0 && 2*x <= freeArmyFields()){
+                    if(x>=0 && x <= freeArmyFields()){
                         tanks = x;
                         success = true;
                     }
-                    else if(2*x > freeArmyFields())
-                        System.out.println(2*x - freeArmyFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
+                    else if(x > freeArmyFields())
+                        System.out.println(x - freeArmyFields() + " jednostek nie ma miejsca, podaj mniejszą ilość");
                 }while(!success);
             }
             case 5 -> {
@@ -332,14 +332,25 @@ public class Simulation{
 
     }
 
+    /**
+     *
+     * @return number of free fields for army units
+     */
     static int freeArmyFields(){
         return size*size - infantry - tanks;
     }
 
+    /**
+     *
+     * @return number of free fields for neutral units
+     */
     static int freeNeutralFields(){
         return size*size - mobiles - bases - traps;
     }
 
+    /**
+     * recalculates quantities of units
+     */
     public static void recalculateParams(){
         infantry = (int)(size*size * 0.75);
         tanks = (int)(size*size * 0.25);
@@ -348,6 +359,11 @@ public class Simulation{
         traps = (int)(size*size * 0.3);
     }
 
+    /**
+     * recalculates amount of specific units based on default proportions. Used when user
+     * lowers map size and army units cant fit in. Tries to fill as many fields as possible and
+     * takes care of army units quantities being even numbers.
+     */
     public static void recalculateArmyParams() {
         int fields = size * size;
         if((0.75 * fields) % 2 == 0 && (0.25 * fields) % 2 == 0) {
@@ -371,6 +387,10 @@ public class Simulation{
             infantry+=2;
     }
 
+    /**
+     * recalculates amount of specific units based on default proportions. Used when user
+     * lowers map size and neutral units cant fit in.
+     */
     public static void recalculateNeutralParams(){
         mobiles = (int)(size*size * 0.3);
         bases = (int)(size*size * 0.1);

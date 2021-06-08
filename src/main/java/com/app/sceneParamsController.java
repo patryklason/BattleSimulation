@@ -13,6 +13,9 @@ import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
+/**
+ * processes user changes of simulation parameters
+ */
 public class sceneParamsController implements Initializable {
 
     @FXML
@@ -119,6 +122,9 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * prints current simulation parameters values
+     */
     private void printParams(){
         Integer sizeI = Simulation.getSize();
         Integer iterationsI = Simulation.getIterations();
@@ -142,6 +148,10 @@ public class sceneParamsController implements Initializable {
         freeNeutralFields.setText(neutralFields.toString());
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the mapSize value if it does.
+     */
     private void changeMapSize(){
         int oldSize = Simulation.getSize();
         try {

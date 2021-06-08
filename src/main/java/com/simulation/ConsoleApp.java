@@ -25,7 +25,7 @@ public class ConsoleApp {
             switch(uChoice){
                 case 0 -> System.out.println("Do zobaczenia :)");
                 case 1 -> Simulation.printParams();
-                case 2 -> Simulation.simulation();
+                case 2 -> {writingConfiguration(); Simulation.simulation();}
                 default -> System.out.println("niepoprawna wartość!");
             }
 
@@ -33,7 +33,9 @@ public class ConsoleApp {
 
     }
 
-    static boolean[] writingConfiguration(){
+
+
+    static void writingConfiguration(){
         boolean[] ansFile = new boolean[6];
         do {
             int fileChoice;
@@ -99,6 +101,10 @@ public class ConsoleApp {
                     System.out.println("Niepoprawna wartość, spróbuj jeszcze raz");
             }
         } while (!ansFile[0]);
-        return ansFile;
+
+        for(int i = 0; i < 5; ++i) {
+            Simulation.uFileChoice[i] = ansFile[i+1];
+        }
+
     }
 }

@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * displays information after simulation finishes
+ */
 public class sceneProgressController implements Initializable {
 
     @FXML

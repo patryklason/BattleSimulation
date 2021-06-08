@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * processes user interaction with main menu
+ */
 public class sceneMainController implements Initializable {
 
     @FXML
