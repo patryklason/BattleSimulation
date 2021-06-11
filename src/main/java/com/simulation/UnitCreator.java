@@ -11,6 +11,15 @@ import static com.simulation.SimulationConstants.*;
 class UnitCreator{
     final private List<Unit> unitList= new ArrayList<>();
 
+    /**
+     * constructor for UnitCreator
+     * @param map map the units will spawn on
+     * @param infantry number of infantry for one team
+     * @param tanks number of tanks for one team
+     * @param mobiles number of mobile bases
+     * @param bases number of bases
+     * @param traps number of traps
+     */
     public UnitCreator(Map map, int infantry, int tanks, int mobiles, int bases, int traps){
 
         for(int i = 0; i < infantry; ++i) {

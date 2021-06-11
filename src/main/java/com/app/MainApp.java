@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application{
 
     /**
-     * loads visible frame and stages
+     * loads application with visible frame and stages
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -33,6 +33,10 @@ public class MainApp extends Application{
         Simulation.recalculateParams();
     }
 
+    /**
+     * starts application
+     * @param args default Java argument
+     */
     public static void main(String[] args) {
         launch(args);
     }

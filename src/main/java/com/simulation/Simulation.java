@@ -10,6 +10,7 @@ import java.util.List;
 
 
 /**
+ * Simulation back-end logic
  * @version 2.0.7
  * @author Patryk Lasoń, Hubert Bełkot
  *
@@ -18,15 +19,38 @@ import java.util.List;
  * has it's own features. The program sets the startup parameters from user input and runs simulation by initializing each unit's
  * movement. The simulation ends within set number of iterations. </p>
  */
-
 public class Simulation{
+    /**
+     * size of the side of the square map
+     */
     static int size = 100;
+    /**
+     * number of iterations
+     */
     static int iterations = 1000;
+    /**
+     * number of infantry for both teams
+     */
     static int infantry = 8000;
+    /**
+     * number of tanks for both teams
+     */
     static int tanks = 2000;
+    /**
+     * number of mobile bases
+     */
     static int mobiles = 3000;
+    /**
+     * number of bases
+     */
     static int bases = 1000;
+    /**
+     * number of traps
+     */
     static int traps = 3000;
+    /**
+     * array of file saving user choices
+     */
     static boolean[] uFileChoice = new boolean[5];
     static {
         uFileChoice[0] = true;
@@ -39,12 +63,19 @@ public class Simulation{
     //4 - stats
 
 
-
+    /**
+     * start consoleApp interface
+     * @param args default Java argument
+     */
     public static void main(String[] args) {
         recalculateParams();
         ConsoleApp.menu();
     }
 
+    /**
+     * runs simulation by initializing creation of map and units, and then initializing unit's movement
+     * saves important stats to file
+     */
     public static void simulation(){
 
         File file = new File("Results.txt");
@@ -158,6 +189,9 @@ public class Simulation{
         ArmyUnit.resetArmyStats();
     }
 
+    /**
+     * displays menu for changing params in console interface
+     */
     static void printParams(){
         int uChoice;
         Scanner scanner = new Scanner(System.in);
@@ -188,6 +222,10 @@ public class Simulation{
         }while(uChoice != 0);
     }
 
+    /**
+     * allows user to set startup params in console interface
+     * @param choice which parameter will be changed
+     */
     static void setStartupParams(int choice) {
         Scanner scanner = new Scanner(System.in);
         boolean success = false;

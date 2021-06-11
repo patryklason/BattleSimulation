@@ -10,13 +10,28 @@ import java.util.Random;
  */
 abstract class MovingUnit extends Unit{
 
+    /**
+     * max number of fields that the unit can move in one turn
+     */
     int movement;
 
+    /**
+     * constructor for MovingUnit
+     * @param id id of unit
+     * @param type type of unit
+     * @param map map the unit will spawn on
+     * @param movement max amount of fields that unit can move in one turn
+     */
     public MovingUnit(int id, String type, Map map, int movement) {
         super(id, type, map);
         this.movement = movement;
     }
 
+    /**
+     * abstract method for units movement
+     * @param map map the unit will move on
+     * @param unitCreator list of units
+     */
     abstract void move(Map map, UnitCreator unitCreator);
 
     /**
@@ -46,31 +61,57 @@ abstract class MovingUnit extends Unit{
         return newField;
     }
 
+
     /**
-     *
+     * tries to find field in specific direction based on current unit's position and rndMovement
      * @param map map on which the new field will be found
      * @param curPos_x current position of unit in x-axis (horizontal)
      * @param curPos_y current position of unit in y-axis (vertical)
      * @param rndMovement randomly generated integer in range (1 - unit_movement)
      * @return found field or null if field cannot be found in that direction
-     *
-     * <p>method tries to find field in specific direction based on current unit's position and rndMovement</p>
      */
     private Field findFieldUp(Map map, int curPos_x, int curPos_y, int rndMovement){
         if(curPos_y + rndMovement >= 0 && curPos_y + rndMovement < map.size)
             return map.getMapList().get(curPos_x).get(curPos_y + rndMovement);
         return null;
     }
+
+    /**
+     * tries to find field in specific direction based on current unit's position and rndMovement
+     * @param map map on which the new field will be found
+     * @param curPos_x current position of unit in x-axis (horizontal)
+     * @param curPos_y current position of unit in y-axis (vertical)
+     * @param rndMovement randomly generated integer in range (1 - unit_movement)
+     * @return found field or null if field cannot be found in that direction
+     */
     private Field findFieldDown(Map map, int curPos_x, int curPos_y, int rndMovement){
         if(curPos_y - rndMovement >= 0 && curPos_y - rndMovement < map.size)
             return map.getMapList().get(curPos_x).get(curPos_y - rndMovement);
         return null;
     }
+
+    /**
+     * tries to find field in specific direction based on current unit's position and rndMovement
+     * @param map map on which the new field will be found
+     * @param curPos_x current position of unit in x-axis (horizontal)
+     * @param curPos_y current position of unit in y-axis (vertical)
+     * @param rndMovement randomly generated integer in range (1 - unit_movement)
+     * @return found field or null if field cannot be found in that direction
+     */
     private Field findFieldRight(Map map, int curPos_x, int curPos_y, int rndMovement){
         if(curPos_x + rndMovement >= 0 && curPos_x + rndMovement < map.size)
             return map.getMapList().get(curPos_x + rndMovement).get(curPos_y);
         return null;
     }
+
+    /**
+     * tries to find field in specific direction based on current unit's position and rndMovement
+     * @param map map on which the new field will be found
+     * @param curPos_x current position of unit in x-axis (horizontal)
+     * @param curPos_y current position of unit in y-axis (vertical)
+     * @param rndMovement randomly generated integer in range (1 - unit_movement)
+     * @return found field or null if field cannot be found in that direction
+     */
     private Field findFieldLeft(Map map, int curPos_x, int curPos_y, int rndMovement){
         if(curPos_x - rndMovement >= 0 && curPos_x - rndMovement < map.size)
             return map.getMapList().get(curPos_x - rndMovement).get(curPos_y);

@@ -30,6 +30,11 @@ public class sceneOptionsController implements Initializable {
     @FXML
     private CheckBox fileStats;
 
+    /**
+     * initializes Options scene
+     * @param location default JavaFX argument
+     * @param resources default JavaFX argument
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         optionsBtnBack.setOnAction(event -> changeSceneToMain());
@@ -65,28 +70,16 @@ public class sceneOptionsController implements Initializable {
         for(int i = 0; i < 5; ++i)
             options[i] = Simulation.getuFileChoice(i);
 
-        if(options[0])
-            fileInfantry.setSelected(true);
-        else if(!options[0])
-            fileInfantry.setSelected(false);
-        if(options[1])
-            fileTanks.setSelected(true);
-        else if(!options[1])
-            fileTanks.setSelected(false);
-        if(options[2])
-            fileTraps.setSelected(true);
-        else if(!options[2])
-            fileTraps.setSelected(false);
-        if(options[3])
-            fileMobiles.setSelected(true);
-        else if(!options[3])
-            fileMobiles.setSelected(false);
-        if(options[4])
-            fileStats.setSelected(true);
-        else if(!options[4])
-            fileStats.setSelected(false);
+        fileInfantry.setSelected(options[0]);
+        fileTanks.setSelected(options[1]);
+        fileTraps.setSelected(options[2]);
+        fileMobiles.setSelected(options[3]);
+        fileStats.setSelected(options[4]);
     }
 
+    /**
+     * changes current scene
+     */
     @FXML
     private void changeSceneToMain(){
         try{

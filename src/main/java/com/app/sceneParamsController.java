@@ -77,7 +77,11 @@ public class sceneParamsController implements Initializable {
     @FXML
     private Button trapsConfirm;
 
-
+    /**
+     * initializes Params scene
+     * @param location default JavaFX argument
+     * @param resources default JavaFX argument
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         paramsBtnBack.setOnAction(event -> changeSceneToMain());
@@ -126,26 +130,26 @@ public class sceneParamsController implements Initializable {
      * prints current simulation parameters values
      */
     private void printParams(){
-        Integer sizeI = Simulation.getSize();
-        Integer iterationsI = Simulation.getIterations();
-        Integer infantryI = Simulation.getInfantry();
-        Integer tanksI = Simulation.getTanks();
-        Integer mobilesI = Simulation.getMobiles();
-        Integer basesI = Simulation.getBases();
-        Integer trapsI = Simulation.getTraps();
-        Integer armyFields = sizeI*sizeI - infantryI - tanksI;
-        Integer neutralFields = sizeI*sizeI - mobilesI - basesI - trapsI;
+        int sizeI = Simulation.getSize();
+        int iterationsI = Simulation.getIterations();
+        int infantryI = Simulation.getInfantry();
+        int tanksI = Simulation.getTanks();
+        int mobilesI = Simulation.getMobiles();
+        int basesI = Simulation.getBases();
+        int trapsI = Simulation.getTraps();
+        int armyFields = sizeI*sizeI - infantryI - tanksI;
+        int neutralFields = sizeI*sizeI - mobilesI - basesI - trapsI;
 
-        mapVal.setText(sizeI.toString());
-        iterationsVal.setText(iterationsI.toString());
-        infantryVal.setText(infantryI.toString());
-        tanksVal.setText(tanksI.toString());
-        mobilesVal.setText(mobilesI.toString());
-        basesVal.setText(basesI.toString());
-        trapsVal.setText(trapsI.toString());
+        mapVal.setText(Integer.toString(sizeI));
+        iterationsVal.setText(Integer.toString(iterationsI));
+        infantryVal.setText(Integer.toString(infantryI));
+        tanksVal.setText(Integer.toString(tanksI));
+        mobilesVal.setText(Integer.toString(mobilesI));
+        basesVal.setText(Integer.toString(basesI));
+        trapsVal.setText(Integer.toString(trapsI));
 
-        freeArmyFields.setText(armyFields.toString());
-        freeNeutralFields.setText(neutralFields.toString());
+        freeArmyFields.setText(Integer.toString(armyFields));
+        freeNeutralFields.setText(Integer.toString(neutralFields));
     }
 
     /**
@@ -155,7 +159,7 @@ public class sceneParamsController implements Initializable {
     private void changeMapSize(){
         int oldSize = Simulation.getSize();
         try {
-            Integer input = Integer.parseInt(mapInput.getText());
+            int input = Integer.parseInt(mapInput.getText());
 
             if(input % 2 == 1){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -169,8 +173,8 @@ public class sceneParamsController implements Initializable {
             else if(input >= 10 && input <=1000){
                 Simulation.setSize(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Rozmiar mapy pomyslnie zmieniono na " + input.toString());
-                mapVal.setText(input.toString());
+                paramsInfo.setText("Rozmiar mapy pomyslnie zmieniono na " + input);
+                mapVal.setText(Integer.toString(input));
                 if(input < oldSize && (Simulation.getInfantry()+Simulation.getTanks() > input*input))
                     Simulation.recalculateArmyParams();
                 if(input < oldSize && (Simulation.getMobiles() + Simulation.getBases()
@@ -190,9 +194,13 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the iterations value if it does.
+     */
     private void changeIterations(){
         try {
-            Integer input = Integer.parseInt(iterationsInput.getText());
+            int input = Integer.parseInt(iterationsInput.getText());
 
             if(input == Simulation.getIterations()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -201,8 +209,8 @@ public class sceneParamsController implements Initializable {
             else if (input >= 1 && input <= 100000) {
                 Simulation.setIterations(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Ilosc iteracji pomyslnie zmieniono na " + input.toString());
-                iterationsVal.setText(input.toString());
+                paramsInfo.setText("Ilosc iteracji pomyslnie zmieniono na " + input);
+                iterationsVal.setText(Integer.toString(input));
             }else{
                 paramsInfo.setStyle("-fx-text-fill: red");
                 paramsInfo.setText("Podano niepoprawna liczbe iteracji (1 - 100 000)");
@@ -214,9 +222,13 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the infantry value if it does.
+     */
     private void changeInfantry(){
         try{
-            Integer input = Integer.parseInt(infantryInput.getText());
+            int input = Integer.parseInt(infantryInput.getText());
             int size = Simulation.getSize();
 
             if(input % 2 == 1){
@@ -231,8 +243,8 @@ public class sceneParamsController implements Initializable {
             else if(input >= 0 && input <= size*size - Simulation.getTanks()){
                 Simulation.setInfantry(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Ilosc piechoty pomyslnie zmieniono na " + input.toString());
-                infantryVal.setText(input.toString());
+                paramsInfo.setText("Ilosc piechoty pomyslnie zmieniono na " + input);
+                infantryVal.setText(Integer.toString(input));
                 printParams();
             }else if(input > size*size - Simulation.getTanks()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -248,9 +260,13 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the tanks value if it does.
+     */
     private void changeTanks(){
         try{
-            Integer input = Integer.parseInt(tanksInput.getText());
+            int input = Integer.parseInt(tanksInput.getText());
             int size = Simulation.getSize();
 
             if(input % 2 == 1){
@@ -265,8 +281,8 @@ public class sceneParamsController implements Initializable {
             else if(input >= 0 && input <= size*size - Simulation.getInfantry()){
                 Simulation.setTanks(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Ilosc czolgow pomyslnie zmieniono na " + input.toString());
-                tanksVal.setText(input.toString());
+                paramsInfo.setText("Ilosc czolgow pomyslnie zmieniono na " + input);
+                tanksVal.setText(Integer.toString(input));
                 printParams();
             }else if(input > size*size - Simulation.getInfantry()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -282,9 +298,13 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the mobiles value if it does.
+     */
     private void changeMobiles(){
         try{
-            Integer input = Integer.parseInt(mobilesInput.getText());
+            int input = Integer.parseInt(mobilesInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getMobiles()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -293,8 +313,8 @@ public class sceneParamsController implements Initializable {
             else if(input >= 0 && input <= size*size - Simulation.getBases() - Simulation.getTraps()){
                 Simulation.setMobiles(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Ilosc mobilnych baz pomyslnie zmieniono na " + input.toString());
-                mobilesVal.setText(input.toString());
+                paramsInfo.setText("Ilosc mobilnych baz pomyslnie zmieniono na " + input);
+                mobilesVal.setText(Integer.toString(input));
                 printParams();
             }else if(input > size*size - Simulation.getBases() - Simulation.getTraps()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -310,9 +330,13 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the bases value if it does.
+     */
     private void changeBases(){
         try{
-            Integer input = Integer.parseInt(basesInput.getText());
+            int input = Integer.parseInt(basesInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getBases()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -321,8 +345,8 @@ public class sceneParamsController implements Initializable {
             else if(input >= 0 && input <= size*size - Simulation.getMobiles() - Simulation.getTraps()){
                 Simulation.setBases(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Ilosc baz pomyslnie zmieniono na " + input.toString());
-                basesVal.setText(input.toString());
+                paramsInfo.setText("Ilosc baz pomyslnie zmieniono na " + input);
+                basesVal.setText(Integer.toString(input));
                 printParams();
             }else if(input > size*size - Simulation.getMobiles() - Simulation.getTraps()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -338,9 +362,13 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * hadles user interaction with the app. Checks if the user input matches specific conditions and
+     * sets the traps value if it does.
+     */
     private void changeTraps(){
         try{
-            Integer input = Integer.parseInt(trapsInput.getText());
+            int input = Integer.parseInt(trapsInput.getText());
             int size = Simulation.getSize();
             if(input == Simulation.getTraps()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -349,8 +377,8 @@ public class sceneParamsController implements Initializable {
             else if(input >= 0 && input <= size*size - Simulation.getMobiles() - Simulation.getBases()){
                 Simulation.setTraps(input);
                 paramsInfo.setStyle("-fx-text-fill: green");
-                paramsInfo.setText("Ilosc pulapek pomyslnie zmieniono na " + input.toString());
-                trapsVal.setText(input.toString());
+                paramsInfo.setText("Ilosc pulapek pomyslnie zmieniono na " + input);
+                trapsVal.setText(Integer.toString(input));
                 printParams();
             }else if(input > size*size - Simulation.getMobiles() - Simulation.getBases()){
                 paramsInfo.setStyle("-fx-text-fill: red");
@@ -366,6 +394,9 @@ public class sceneParamsController implements Initializable {
         }
     }
 
+    /**
+     * changes current scene
+     */
     @FXML
     private void changeSceneToMain(){
         try{

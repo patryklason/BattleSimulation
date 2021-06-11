@@ -6,10 +6,25 @@ import java.util.Random;
  * Base class for all the Units. It stores data such as field, id and type.
  */
 abstract class Unit {
+    /**
+     * field that unit currently occupies
+     */
     protected Field field = null;
+    /**
+     * unique id of unit
+     */
     final int id;
+    /**
+     * type of unit
+     */
     final String type;
 
+    /**
+     *
+     * @param id id of unit
+     * @param type type of unit
+     * @param map map the unit will spawn on
+     */
     public Unit(int id, String type, Map map){
         Random random = new Random();
         int rnd;

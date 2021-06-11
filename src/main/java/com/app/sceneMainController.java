@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -23,9 +22,12 @@ public class sceneMainController implements Initializable {
     private Button mainBtnParams;
     @FXML
     private Button mainBtnOptions;
-    @FXML
-    private Pane paneMain;
 
+    /**
+     * initializes Main scene
+     * @param location default JavaFX argument
+     * @param resources default JavaFX argument
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mainBtnStart.setOnAction(event -> { Simulation.simulation(); changeSceneToProgress();});
@@ -34,6 +36,9 @@ public class sceneMainController implements Initializable {
 
     }
 
+    /**
+     * changes current scene
+     */
     @FXML
     private void changeSceneToProgress(){
         try{
@@ -45,6 +50,9 @@ public class sceneMainController implements Initializable {
         }
     }
 
+    /**
+     * changes current scene
+     */
     @FXML
     private void changeSceneToOptions(){
         try {
@@ -56,6 +64,9 @@ public class sceneMainController implements Initializable {
         }
     }
 
+    /**
+     * changes current scene
+     */
     @FXML
     private void changeSceneToParams(){
         try {

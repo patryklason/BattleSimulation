@@ -8,11 +8,24 @@ import static com.simulation.SimulationConstants.*;
  * base meets the trap, it is destroyed instantly.
  */
 class Trap extends Unit{
+    /**
+     * damage the trap will deal
+     */
     final int damage = TRAP_DMG;
+    /**
+     * number of uses for Trap
+     */
     private int usesLeft = TRAP_USES;
-
+    /**
+     * helpful variable to save stats to file
+     */
     private static int deadTrap;
 
+    /**
+     * constructor for Trap
+     * @param id id of unit
+     * @param map map the unit will spawn on
+     */
     public Trap(int id, Map map){
         super(id, "trap", map);
     }

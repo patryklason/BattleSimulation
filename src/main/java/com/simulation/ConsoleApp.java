@@ -2,8 +2,13 @@ package com.simulation;
 
 import java.util.Scanner;
 
+/**
+ * optional console interface
+ */
 public class ConsoleApp {
-
+    /**
+     * main menu for console interface
+     */
     static void menu(){
         int uChoice;
         Scanner scanner = new Scanner(System.in);
@@ -34,7 +39,9 @@ public class ConsoleApp {
     }
 
 
-
+    /**
+     * takes user input and sets what should be written to results file. Works for console interface
+     */
     static void writingConfiguration(){
         boolean[] ansFile = new boolean[6];
         do {
@@ -102,9 +109,7 @@ public class ConsoleApp {
             }
         } while (!ansFile[0]);
 
-        for(int i = 0; i < 5; ++i) {
-            Simulation.uFileChoice[i] = ansFile[i+1];
-        }
+        System.arraycopy(ansFile, 1, Simulation.uFileChoice, 0, 5);
 
     }
 }

@@ -8,10 +8,25 @@ import static com.simulation.SimulationConstants.*;
  */
 class ArmyUnit extends MovingUnit{
 
+    /**
+     * unit's supplies
+     */
     private Supplies supplies;
+    /**
+     * max health points for unit of specific type
+     */
     final int maxHp;
+    /**
+     * max ammunation points for unit of specific type
+     */
     final int maxAmmo;
+    /**
+     * unit's team
+     */
     final int team;
+    /**
+     * damage that unit can deal
+     */
     final int damage;
     private boolean isAlive;
 
@@ -23,9 +38,19 @@ class ArmyUnit extends MovingUnit{
     private static int numOfAliveTeam2;
     private static int numOfBattles;
     private static int numOfAttacks;
+    /**
+     * helpful value to save stats to file
+     */
     private static int deadArmy;
 
-
+    /**
+     * constructor for ArmyUnit
+     * @param id id of unit
+     * @param type type of unit
+     * @param map map the unit will spawn on
+     * @param movement max amount of fields that unit can move in one turn
+     * @param team unit's team
+     */
     public ArmyUnit(int id, String type, Map map, int movement, int team){
         super(id, type, map, movement);
 
@@ -171,6 +196,10 @@ class ArmyUnit extends MovingUnit{
         }
     }
 
+    /**
+     * allows Armyunit to occupy the field if it is free
+     * @param newField field that would get taken
+     */
     private void takeField(Field newField){
         if (newField.getTakenByArmy() != -1)
             return;

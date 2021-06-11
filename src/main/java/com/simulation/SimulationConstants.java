@@ -2,9 +2,7 @@ package com.simulation;
 
 /**
  * Stores custom constants for each type of unit
- * <p>
- *     those values are not available to be changed during simulation startup
- * </p>
+ * those values are not available to be changed during simulation startup
  */
 public class SimulationConstants {
     public static final int INFANTRY_HP = 100;

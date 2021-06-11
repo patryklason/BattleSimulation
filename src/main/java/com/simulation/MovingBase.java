@@ -8,10 +8,25 @@ import static com.simulation.SimulationConstants.*;
  * It can be destroyed by trap or resupplied by main base.
  */
 class MovingBase extends MovingUnit{
+    /**
+     * ammo amount that will be given to armyUnit
+     */
     final int ammoToGive = MOVING_BASE_AMMO;
+    /**
+     * number of uses for movingBase. it can be increased by base to the initial value
+     */
     private int usesLeft = MOVING_BASE_USES;
+    /**
+     * helpful variable to save stats to file
+     */
     private static int deadMovingBase;
 
+    /**
+     * constructor for MovingBase
+     * @param id id of unit
+     * @param map map the unit will spawn on
+     * @param movement max amount of fields that unit can move in one turn
+     */
     public MovingBase(int id, Map map, int movement){
         super(id, "movingBase", map, movement);
     }
@@ -65,6 +80,11 @@ class MovingBase extends MovingUnit{
             resupply(armyUnit);
         }
     }
+
+    /**
+     * occupies field if it is free for MovingBase
+     * @param newField field that would be occupied
+     */
     private void takeField(Field newField){
         if(newField.getTakenByNeutral() != -1)
             return;

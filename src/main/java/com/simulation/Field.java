@@ -8,11 +8,28 @@ import java.util.Objects;
  * cannot be occupied by infantry and tank at the same time).
  */
 class Field{
+    /**
+     * horizontal position index
+     */
     final int pos_x;
+    /**
+     * vertical position index
+     */
     final int pos_y;
-    private int takenByArmy;        //free: -1, else: unitList index
+    /**
+     * id of the armyUnit that occupies the field of -1 if it is free
+     */
+    private int takenByArmy; //free: -1, else: unitList index
+    /**
+     * id of the neutral unit that occupies the field of -1 if it is free
+     */
     private int takenByNeutral;
 
+    /**
+     * constructor for Field
+     * @param pos_x horizontal position index
+     * @param pos_y vertical position index
+     */
     public Field(int pos_x, int pos_y){
         this.pos_x = pos_x;
         this.pos_y = pos_y;
